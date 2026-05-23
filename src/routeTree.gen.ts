@@ -9,8 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SmartRouteImport } from './routes/smart'
+import { Route as ResultsRouteImport } from './routes/results'
+import { Route as QuickRouteImport } from './routes/quick'
+import { Route as OrderRouteImport } from './routes/order'
+import { Route as ModeRouteImport } from './routes/mode'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ChooseRouteImport } from './routes/choose'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SmartRoute = SmartRouteImport.update({
+  id: '/smart',
+  path: '/smart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultsRoute = ResultsRouteImport.update({
+  id: '/results',
+  path: '/results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuickRoute = QuickRouteImport.update({
+  id: '/quick',
+  path: '/quick',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderRoute = OrderRouteImport.update({
+  id: '/order',
+  path: '/order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModeRoute = ModeRouteImport.update({
+  id: '/mode',
+  path: '/mode',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChooseRoute = ChooseRouteImport.update({
+  id: '/choose',
+  path: '/choose',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +61,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/choose': typeof ChooseRoute
+  '/compare': typeof CompareRoute
+  '/mode': typeof ModeRoute
+  '/order': typeof OrderRoute
+  '/quick': typeof QuickRoute
+  '/results': typeof ResultsRoute
+  '/smart': typeof SmartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/choose': typeof ChooseRoute
+  '/compare': typeof CompareRoute
+  '/mode': typeof ModeRoute
+  '/order': typeof OrderRoute
+  '/quick': typeof QuickRoute
+  '/results': typeof ResultsRoute
+  '/smart': typeof SmartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/choose': typeof ChooseRoute
+  '/compare': typeof CompareRoute
+  '/mode': typeof ModeRoute
+  '/order': typeof OrderRoute
+  '/quick': typeof QuickRoute
+  '/results': typeof ResultsRoute
+  '/smart': typeof SmartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/choose'
+    | '/compare'
+    | '/mode'
+    | '/order'
+    | '/quick'
+    | '/results'
+    | '/smart'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/choose'
+    | '/compare'
+    | '/mode'
+    | '/order'
+    | '/quick'
+    | '/results'
+    | '/smart'
+  id:
+    | '__root__'
+    | '/'
+    | '/choose'
+    | '/compare'
+    | '/mode'
+    | '/order'
+    | '/quick'
+    | '/results'
+    | '/smart'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChooseRoute: typeof ChooseRoute
+  CompareRoute: typeof CompareRoute
+  ModeRoute: typeof ModeRoute
+  OrderRoute: typeof OrderRoute
+  QuickRoute: typeof QuickRoute
+  ResultsRoute: typeof ResultsRoute
+  SmartRoute: typeof SmartRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/smart': {
+      id: '/smart'
+      path: '/smart'
+      fullPath: '/smart'
+      preLoaderRoute: typeof SmartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/results': {
+      id: '/results'
+      path: '/results'
+      fullPath: '/results'
+      preLoaderRoute: typeof ResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quick': {
+      id: '/quick'
+      path: '/quick'
+      fullPath: '/quick'
+      preLoaderRoute: typeof QuickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order': {
+      id: '/order'
+      path: '/order'
+      fullPath: '/order'
+      preLoaderRoute: typeof OrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mode': {
+      id: '/mode'
+      path: '/mode'
+      fullPath: '/mode'
+      preLoaderRoute: typeof ModeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/choose': {
+      id: '/choose'
+      path: '/choose'
+      fullPath: '/choose'
+      preLoaderRoute: typeof ChooseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +197,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChooseRoute: ChooseRoute,
+  CompareRoute: CompareRoute,
+  ModeRoute: ModeRoute,
+  OrderRoute: OrderRoute,
+  QuickRoute: QuickRoute,
+  ResultsRoute: ResultsRoute,
+  SmartRoute: SmartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

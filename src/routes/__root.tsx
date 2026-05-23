@@ -81,6 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Decide what to eat in seconds. Quick Pick by mood or Smart Pick by preference, with side-by-side comparison.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Easypick — Smart restaurant table" },
+      { name: "description", content: "عبدو جدع فشخ يجدعاننننن" },
+      { property: "og:description", content: "عبدو جدع فشخ يجدعاننننن" },
+      { name: "twitter:description", content: "عبدو جدع فشخ يجدعاننننن" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/b15829c7-a9e5-4491-bba0-c3bfedca0fbb" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/b15829c7-a9e5-4491-bba0-c3bfedca0fbb" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {

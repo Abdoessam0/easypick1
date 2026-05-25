@@ -22,7 +22,7 @@ export const Route = createFileRoute("/results")({
   component: ResultsPage,
 });
 
-const MAX = 3;
+const REQUIRED_COMPARE_COUNT = 3;
 
 function ResultsPage() {
   const { mode, mood, prefs, compare, toggleCompare, removeCompare, clearCompare } =
@@ -39,13 +39,15 @@ function ResultsPage() {
     meals = getSmartMatches(prefs);
   }
 
-  const canCompare = compare.length >= 2;
+  const canCompare = compare.length === REQUIRED_COMPARE_COUNT;
   const trayMessage =
     compare.length === 0
-      ? "Pick 2 or 3 meals to compare"
+      ? "Pick 3 meals to compare"
       : compare.length === 1
-        ? "Select one more meal to compare"
-        : `${compare.length} meals selected — ready to compare`;
+        ? "Pick 2 more meals to compare"
+        : compare.length === 2
+          ? "Pick 1 more meal to compare"
+          : "3 meals selected";
 
   return (
     <Shell>
@@ -90,7 +92,7 @@ function ResultsPage() {
                 matchPct={mode === "smart" ? match : undefined}
                 bestMatch={mode === "quick" && idx === 0}
                 selected={compare.includes(meal.id)}
-                disabled={compare.length >= MAX}
+                disabled={compare.length >= REQUIRED_COMPARE_COUNT}
                 onToggle={() => toggleCompare(meal.id)}
               />
             ))}
@@ -98,7 +100,6 @@ function ResultsPage() {
         )}
       </div>
 
-      {/* Compare tray */}
       <div className="fixed inset-x-0 bottom-24 z-10 px-4">
         <div className="glass mx-auto flex max-w-6xl flex-col gap-3 rounded-[2rem] p-4 shadow-soft md:flex-row md:items-center md:gap-5">
           <div className="flex items-center gap-3 md:w-64 md:shrink-0">
@@ -106,7 +107,7 @@ function ResultsPage() {
               <ShoppingBasket className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <div className="font-bold leading-tight">Compare tray</div>
+              <div className="font-bold leading-tight">Pick 3 meals to compare</div>
               <div className="text-xs text-muted-foreground">{trayMessage}</div>
             </div>
           </div>
@@ -134,7 +135,7 @@ function ResultsPage() {
                 title="Clear all"
               >
                 <Trash2 className="h-4 w-4" />
-                <span className="hidden sm:inline">Clear</span>
+                <span className="hidden sm:inline">Clear all</span>
               </button>
             )}
             <button

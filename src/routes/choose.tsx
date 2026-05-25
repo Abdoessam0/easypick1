@@ -186,47 +186,62 @@ function Stat({ icon: Icon, value }: { icon: React.ElementType; value: string })
 
 function buildReasons(meal: Meal, mode: string | null, mood: string | null) {
   const reasons: { icon: React.ElementType; title: string; body: string }[] = [];
-  if (meal.protein >= 25) {
-    reasons.push({
-      icon: Dumbbell,
-      title: "High in protein",
-      body: `Helps support your muscles & keeps you full longer. (${meal.protein}g)`,
-    });
-  }
-  if (meal.calories <= 500) {
-    reasons.push({
-      icon: Leaf,
-      title: "Light & balanced",
-      body: `Perfect calorie balance for your day. (${meal.calories} kcal)`,
-    });
-  } else {
+
+  if (mode === "smart") {
+    // Smart Pick: nutrition-focused
+    if (meal.protein >= 25) {
+      reasons.push({
+        icon: Dumbbell,
+        title: "High in protein",
+        body: `Supports your muscles and keeps you full longer. (${meal.protein}g)`,
+      });
+    }
+    if (meal.sugar <= 8) {
+      reasons.push({
+        icon: Candy,
+        title: "Lower in sugar",
+        body: `Fits your preference for less sweet meals. (${meal.sugar}g)`,
+      });
+    }
     reasons.push({
       icon: Flame,
-      title: "Comfort & satisfaction",
-      body: `Filling enough to handle a hungry mood. (${meal.calories} kcal)`,
+      title: "Balanced calories",
+      body: `${meal.calories} kcal — a balanced load for your day.`,
     });
-  }
-  if (meal.sugar <= 8) {
     reasons.push({
-      icon: Candy,
-      title: "Lower in sugar",
-      body: `Fits your preference for less sweet meals. (${meal.sugar}g)`,
-    });
-  }
-  if (meal.prepTime <= 12) {
-    reasons.push({
-      icon: Zap,
-      title: "Quick prep",
-      body: `Ready in just ${meal.prepTime} minutes.`,
+      icon: Leaf,
+      title: "Matches your preferences",
+      body: "Closest fit to the nutrition sliders you set.",
     });
   } else {
+    // Quick Pick: mood-focused (price, calories, prep, satiety)
     reasons.push({
-      icon: Zap,
-      title: "Sustained energy",
-      body: "Provides steady energy without feeling heavy.",
+      icon: Flame,
+      title: mood === "light" ? "Fits your calorie target" : "Right calorie load",
+      body: `${meal.calories} kcal — matches a ${mood ?? "quick"} mood.`,
+    });
+    if (mood === "fast" || meal.prepTime <= 12) {
+      reasons.push({
+        icon: Zap,
+        title: "Ready quickly",
+        body: `On your table in just ${meal.prepTime} minutes.`,
+      });
+    }
+    reasons.push({
+      icon: Heart,
+      title: meal.satiety === "High" ? "High satiety" : "Satisfying portion",
+      body:
+        meal.satiety === "High"
+          ? "Filling enough to keep you happy."
+          : "Balanced portion that satisfies without feeling heavy.",
+    });
+    reasons.push({
+      icon: Dumbbell,
+      title: "Good price",
+      body: `${meal.price} — solid value for what you get.`,
     });
   }
-  // dedupe / cap
+
   return reasons.slice(0, 4);
 }
 

@@ -3,8 +3,8 @@ import { Shell } from "@/components/easypick/Shell";
 import { useEasypick } from "@/lib/easypick-context";
 import {
   getMealById,
-  metricBetter,
   pickWinner,
+  scoreMeal,
   type CompareCtx,
   type Meal,
 } from "@/lib/meals";
@@ -14,9 +14,9 @@ import {
   Clock,
   Dumbbell,
   DollarSign,
+  Candy,
   Trophy,
   ChevronLeft,
-  ChevronRight,
   RefreshCw,
   Check,
 } from "lucide-react";
@@ -29,76 +29,104 @@ function ComparePage() {
   const { compare, mode, mood, prefs, setFinalChoice } = useEasypick();
   const nav = useNavigate();
 
-  if (compare.length !== 2) return <Navigate to="/results" />;
-  const a = getMealById(compare[0])!;
-  const b = getMealById(compare[1])!;
+  if (compare.length < 2) return <Navigate to="/results" />;
+
+  const meals = compare
+    .map((id) => getMealById(id))
+    .filter((m): m is Meal => !!m);
 
   const ctx: CompareCtx =
     mode === "smart"
       ? { kind: "smart", prefs }
       : { kind: "mood", mood: mood ?? "hungry" };
 
-  const overall = pickWinner(a, b, ctx);
+  // Determine winner across N meals
+  let winnerMeal = meals[0];
+  if (ctx.kind === "smart") {
+    let best = -Infinity;
+    for (const m of meals) {
+      const s = scoreMeal(m, ctx.prefs);
+      if (s > best) {
+        best = s;
+        winnerMeal = m;
+      }
+    }
+  } else {
+    // Pairwise tournament keeping winner
+    winnerMeal = meals.reduce((a, b) => {
+      const res = pickWinner(a, b, ctx);
+      return res.winner === "b" ? b : a;
+    });
+  }
 
-  const rows = [
-    {
+  // Metrics emphasized by mode
+  type Metric = {
+    key: string;
+    icon: React.ElementType;
+    label: string;
+    get: (m: Meal) => number;
+    display: (m: Meal) => string;
+    preferHigher: boolean;
+  };
+
+  const allMetrics: Record<string, Metric> = {
+    calories: {
       key: "calories",
       icon: Flame,
       label: "Calories",
-      a: a.calories,
-      b: b.calories,
-      aDisplay: `${a.calories} kcal`,
-      bDisplay: `${b.calories} kcal`,
+      get: (m) => m.calories,
+      display: (m) => `${m.calories} kcal`,
       preferHigher: mode === "quick" && mood === "hungry",
-      max: 1000,
     },
-    {
+    satiety: {
       key: "satiety",
       icon: Heart,
       label: "Satiety",
-      a: a.satiety === "High" ? 3 : a.satiety === "Medium" ? 2 : 1,
-      b: b.satiety === "High" ? 3 : b.satiety === "Medium" ? 2 : 1,
-      aDisplay: a.satiety,
-      bDisplay: b.satiety,
+      get: (m) => (m.satiety === "High" ? 3 : m.satiety === "Medium" ? 2 : 1),
+      display: (m) => m.satiety,
       preferHigher: true,
-      max: 3,
     },
-    {
+    prep: {
       key: "prep",
       icon: Clock,
       label: "Prep Time",
-      a: a.prepTime,
-      b: b.prepTime,
-      aDisplay: `${a.prepTime} min`,
-      bDisplay: `${b.prepTime} min`,
+      get: (m) => m.prepTime,
+      display: (m) => `${m.prepTime} min`,
       preferHigher: false,
-      max: 20,
     },
-    {
+    protein: {
       key: "protein",
       icon: Dumbbell,
       label: "Protein",
-      a: a.protein,
-      b: b.protein,
-      aDisplay: `${a.protein} g`,
-      bDisplay: `${b.protein} g`,
+      get: (m) => m.protein,
+      display: (m) => `${m.protein} g`,
       preferHigher: true,
-      max: 50,
     },
-    {
+    sugar: {
+      key: "sugar",
+      icon: Candy,
+      label: "Sugar",
+      get: (m) => m.sugar,
+      display: (m) => `${m.sugar} g`,
+      preferHigher: false,
+    },
+    price: {
       key: "price",
       icon: DollarSign,
       label: "Price",
-      a: a.price.length,
-      b: b.price.length,
-      aDisplay: a.price,
-      bDisplay: b.price,
+      get: (m) => m.price.length,
+      display: (m) => m.price,
       preferHigher: false,
-      max: 3,
     },
-  ];
+  };
 
-  const winnerMeal = overall.winner === "b" ? b : a;
+  const metrics: Metric[] =
+    mode === "smart"
+      ? [allMetrics.protein, allMetrics.sugar, allMetrics.calories, allMetrics.satiety, allMetrics.prep, allMetrics.price]
+      : [allMetrics.price, allMetrics.calories, allMetrics.prep, allMetrics.satiety, allMetrics.protein, allMetrics.sugar];
+
+  const cols = meals.length; // 2 or 3
+  const gridCols = cols === 3 ? "md:grid-cols-3" : "md:grid-cols-2";
 
   const choose = (id: string) => {
     setFinalChoice(id);
@@ -109,122 +137,122 @@ function ComparePage() {
     <Shell>
       <Link
         to="/results"
-        className="glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-primary"
+        className="glass mb-6 inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-primary"
       >
         <ChevronLeft className="h-4 w-4" /> Back to results
       </Link>
 
       <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
-          Compare Your <span className="text-gradient-primary">Top Picks</span>
+        <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
+          Compare your <span className="text-gradient-primary">top picks</span>
         </h1>
-        <p className="mt-3 text-lg text-muted-foreground">
-          We&rsquo;ve compared your top choices side by side so you can pick the
-          best match.
+        <p className="mt-3 text-base text-muted-foreground md:text-lg">
+          We've compared them side by side. Our suggestion is highlighted below.
         </p>
       </div>
 
       {/* Meal hero row */}
-      <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 items-stretch gap-4 md:grid-cols-[1fr_auto_1fr]">
-        <MealHero meal={a} index={1} />
-        <div className="flex items-center justify-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-lg font-extrabold text-primary-foreground shadow-glow">
-            VS
-          </div>
-        </div>
-        <MealHero meal={b} index={2} />
+      <div className={`mx-auto mt-8 grid max-w-6xl grid-cols-1 gap-4 ${gridCols}`}>
+        {meals.map((m, i) => (
+          <MealHero key={m.id} meal={m} index={i + 1} winner={m.id === winnerMeal.id} />
+        ))}
       </div>
 
-      {/* Comparison rows */}
-      <div className="glass mx-auto mt-6 max-w-6xl rounded-[2rem] p-2 md:p-4">
-        {rows.map((r) => {
-          const better = metricBetter(r.a, r.b, r.preferHigher);
-          const Icon = r.icon;
+      {/* Comparison table */}
+      <div className="glass mx-auto mt-6 max-w-6xl rounded-[2rem] p-4 shadow-soft md:p-6">
+        {metrics.map((mt) => {
+          const vals = meals.map((m) => mt.get(m));
+          const best = mt.preferHigher ? Math.max(...vals) : Math.min(...vals);
           return (
             <div
-              key={r.key}
-              className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 border-b border-border/60 px-2 py-4 last:border-0 md:gap-6 md:px-6"
+              key={mt.key}
+              className="grid items-center gap-3 border-b border-border/60 py-4 last:border-0"
+              style={{
+                gridTemplateColumns: `repeat(${cols}, 1fr) 140px`,
+              }}
             >
-              <Side
-                value={r.aDisplay}
-                pct={Math.min(100, (r.a / r.max) * 100)}
-                better={better === "a"}
-                align="right"
-              />
-              <div className="flex min-w-[140px] flex-col items-center gap-1">
-                <Icon className="h-5 w-5 text-primary" />
-                <div className="text-sm font-semibold">{r.label}</div>
+              {meals.map((m, i) => {
+                const isBest = mt.get(m) === best && vals.filter((v) => v === best).length === 1;
+                return (
+                  <div key={m.id} className="flex flex-col items-center gap-1 text-center">
+                    <div className={`text-sm font-bold ${isBest ? "text-primary" : "text-foreground/70"}`}>
+                      {mt.display(m)}
+                    </div>
+                    {isBest && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+                        ★ Better
+                      </span>
+                    )}
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground sm:hidden">
+                      Meal {i + 1}
+                    </span>
+                  </div>
+                );
+              })}
+              <div className="flex flex-col items-center gap-1 border-l border-border pl-3">
+                <mt.icon className="h-5 w-5 text-primary" />
+                <div className="text-xs font-semibold">{mt.label}</div>
               </div>
-              <Side
-                value={r.bDisplay}
-                pct={Math.min(100, (r.b / r.max) * 100)}
-                better={better === "b"}
-                align="left"
-              />
             </div>
           );
         })}
       </div>
 
       {/* Suggestion */}
-      <div className="glass mx-auto mt-6 flex max-w-6xl flex-col items-center justify-between gap-4 rounded-[2rem] p-6 md:flex-row">
+      <div className="glass mx-auto mt-6 flex max-w-6xl flex-col gap-4 rounded-[2rem] p-6 shadow-glow md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-4">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft">
             <Trophy className="h-7 w-7 text-primary" />
           </div>
           <div>
             <div className="text-xs font-bold uppercase tracking-wider text-primary">
-              Our Suggestion
+              Our suggestion
             </div>
             <div className="text-2xl font-extrabold">{winnerMeal.name}</div>
             <div className="text-sm text-muted-foreground">
               Best match for your{" "}
               <span className="font-semibold text-primary">
                 {mode === "smart"
-                  ? "Smart Pick"
+                  ? "Smart Pick preferences"
                   : mood === "hungry"
-                    ? "Hungry Mood"
+                    ? "Hungry mood"
                     : mood === "light"
-                      ? "Light Mood"
-                      : "Fast Mood"}
+                      ? "Light mood"
+                      : "Fast mood"}
               </span>
             </div>
+            <p className="mt-2 max-w-md text-sm text-foreground/70">
+              {reasonShort(winnerMeal, ctx)}
+            </p>
           </div>
         </div>
-        <p className="max-w-xs text-sm text-muted-foreground">
-          {reasonShort(winnerMeal, ctx)}
-        </p>
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => choose(winnerMeal.id)}
-            className="flex items-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-bold text-primary-foreground shadow-glow"
+            className="flex min-h-[52px] items-center gap-2 rounded-full bg-primary px-6 py-4 text-sm font-bold text-primary-foreground shadow-glow"
           >
-            <Check className="h-4 w-4" /> CHOOSE THIS MEAL
+            <Check className="h-4 w-4" /> Choose this meal
           </button>
           <button
             onClick={() => nav({ to: "/results" })}
-            className="flex items-center gap-2 rounded-full border border-border bg-card px-6 py-4 text-sm font-bold"
+            className="flex min-h-[52px] items-center gap-2 rounded-full border border-border bg-card px-6 py-4 text-sm font-bold"
           >
-            <RefreshCw className="h-4 w-4" /> COMPARE ANOTHER
+            <RefreshCw className="h-4 w-4" /> Change selected meals
           </button>
         </div>
       </div>
 
-      {/* Choose each */}
-      <div className="mx-auto mt-4 flex max-w-6xl items-center justify-center gap-3 text-sm text-muted-foreground">
+      <div className="mx-auto mt-4 flex max-w-6xl flex-wrap items-center justify-center gap-3 text-sm text-muted-foreground">
         Or pick directly:
-        <button
-          onClick={() => choose(a.id)}
-          className="rounded-full bg-card px-4 py-2 font-semibold shadow-soft hover:bg-primary-soft"
-        >
-          Choose {a.name} <ChevronRight className="ml-1 inline h-3 w-3" />
-        </button>
-        <button
-          onClick={() => choose(b.id)}
-          className="rounded-full bg-card px-4 py-2 font-semibold shadow-soft hover:bg-primary-soft"
-        >
-          Choose {b.name} <ChevronRight className="ml-1 inline h-3 w-3" />
-        </button>
+        {meals.map((m) => (
+          <button
+            key={m.id}
+            onClick={() => choose(m.id)}
+            className="rounded-full bg-card px-4 py-2 font-semibold shadow-soft hover:bg-primary-soft"
+          >
+            Choose {m.name}
+          </button>
+        ))}
       </div>
     </Shell>
   );
@@ -232,77 +260,49 @@ function ComparePage() {
 
 function reasonShort(meal: Meal, ctx: CompareCtx) {
   if (ctx.kind === "smart") {
-    return "Best aligned with your sliders across protein, calories, sugar, and energy.";
+    return "Best aligned with your preferences across protein, sugar and calories.";
   }
-  if (ctx.mood === "hungry") return "Higher in satiety and protein to keep you full and satisfied for longer.";
-  if (ctx.mood === "light") return "Lower in calories with balanced nutrition that fits a lighter mood.";
+  if (ctx.mood === "hungry")
+    return "Higher in satiety and protein to keep you full and satisfied.";
+  if (ctx.mood === "light")
+    return "Lower in calories with balanced nutrition for a lighter meal.";
   return `Ready in just ${meal.prepTime} minutes — perfect when time matters.`;
 }
 
-function MealHero({ meal, index }: { meal: Meal; index: number }) {
+function MealHero({ meal, index, winner }: { meal: Meal; index: number; winner: boolean }) {
   return (
-    <div className="glass relative flex items-center gap-5 rounded-[2rem] p-5">
+    <div
+      className={`glass relative flex items-center gap-4 rounded-[2rem] p-4 ${
+        winner ? "ring-2 ring-primary shadow-glow" : ""
+      }`}
+    >
       <div className="absolute -left-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-glow">
         {index}
       </div>
-      <div className="aspect-square w-40 shrink-0 overflow-hidden rounded-2xl bg-primary-soft/40">
+      {winner && (
+        <div className="absolute -top-3 right-4 rounded-full bg-primary px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground shadow-glow">
+          Suggested
+        </div>
+      )}
+      <div className="aspect-square w-28 shrink-0 overflow-hidden rounded-2xl bg-primary-soft/40">
         <img src={meal.image} alt={meal.name} className="h-full w-full object-cover" />
       </div>
-      <div className="flex-1">
-        <h3 className="text-2xl font-extrabold leading-tight">{meal.name}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{meal.description}</p>
-        <div className="mt-3 flex flex-wrap gap-3 text-xs">
+      <div className="flex-1 min-w-0">
+        <h3 className="truncate text-lg font-extrabold leading-tight">{meal.name}</h3>
+        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+          {meal.description}
+        </p>
+        <div className="mt-2 flex flex-wrap gap-2 text-xs">
           <span className="inline-flex items-center gap-1 font-semibold">
-            <Flame className="h-3.5 w-3.5 text-primary" /> {meal.calories} kcal
+            <Flame className="h-3.5 w-3.5 text-primary" /> {meal.calories}
           </span>
           <span className="inline-flex items-center gap-1 font-semibold">
-            <Clock className="h-3.5 w-3.5 text-primary" /> {meal.prepTime} min
+            <Clock className="h-3.5 w-3.5 text-primary" /> {meal.prepTime}m
           </span>
           <span className="inline-flex items-center gap-1 font-semibold">
-            <Heart className="h-3.5 w-3.5 text-primary" /> {meal.satiety} Satiety
+            <DollarSign className="h-3.5 w-3.5 text-primary" /> {meal.price}
           </span>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function Side({
-  value,
-  pct,
-  better,
-  align,
-}: {
-  value: string;
-  pct: number;
-  better: boolean;
-  align: "left" | "right";
-}) {
-  return (
-    <div
-      className={`flex items-center gap-3 ${
-        align === "right" ? "flex-row-reverse text-right" : ""
-      }`}
-    >
-      <div className="flex w-20 shrink-0 flex-col items-end gap-1">
-        <div className={`text-sm font-bold ${better ? "text-primary" : ""}`}>
-          {value}
-        </div>
-        {better && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
-            ★ Better
-          </span>
-        )}
-      </div>
-      <div
-        className={`relative h-2 flex-1 overflow-hidden rounded-full bg-border/70`}
-      >
-        <div
-          className={`absolute top-0 h-full rounded-full ${
-            better ? "bg-primary shadow-glow" : "bg-primary/40"
-          } ${align === "right" ? "right-0" : "left-0"}`}
-          style={{ width: `${pct}%` }}
-        />
       </div>
     </div>
   );

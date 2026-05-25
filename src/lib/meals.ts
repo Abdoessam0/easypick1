@@ -42,7 +42,7 @@ export const MEALS: Meal[] = [
     prepTime: 12,
     satiety: "High",
     price: "$$",
-    tags: ["Comfort", "High Satiety"],
+    tags: ["Filling", "Best Value"],
     moods: ["hungry"],
   },
   {
@@ -57,7 +57,7 @@ export const MEALS: Meal[] = [
     prepTime: 15,
     satiety: "High",
     price: "$$",
-    tags: ["High Protein", "Balanced"],
+    tags: ["High Protein", "Balanced Meal"],
     moods: ["hungry"],
   },
   {
@@ -72,7 +72,7 @@ export const MEALS: Meal[] = [
     prepTime: 14,
     satiety: "High",
     price: "$$",
-    tags: ["Comfort", "Creamy"],
+    tags: ["Filling", "Balanced Meal"],
     moods: ["hungry"],
   },
   {
@@ -87,7 +87,7 @@ export const MEALS: Meal[] = [
     prepTime: 10,
     satiety: "High",
     price: "$",
-    tags: ["Comfort", "Shareable"],
+    tags: ["Filling", "Best Value"],
     moods: ["hungry"],
   },
   {
@@ -117,7 +117,7 @@ export const MEALS: Meal[] = [
     prepTime: 16,
     satiety: "Medium",
     price: "$$",
-    tags: ["Balanced", "Low Calorie"],
+    tags: ["Balanced Meal", "Low Calorie"],
     moods: ["light"],
   },
   {
@@ -132,7 +132,7 @@ export const MEALS: Meal[] = [
     prepTime: 18,
     satiety: "Medium",
     price: "$$$",
-    tags: ["High Protein", "Omega-3"],
+    tags: ["High Protein", "Fresh"],
     moods: ["light"],
   },
   {
@@ -147,7 +147,7 @@ export const MEALS: Meal[] = [
     prepTime: 12,
     satiety: "Medium",
     price: "$",
-    tags: ["Light", "Low Calorie"],
+    tags: ["Low Calorie", "Best Value"],
     moods: ["light"],
   },
   {
@@ -162,7 +162,7 @@ export const MEALS: Meal[] = [
     prepTime: 10,
     satiety: "Medium",
     price: "$$",
-    tags: ["Fast", "Balanced"],
+    tags: ["Fast Prep", "Balanced Meal"],
     moods: ["fast", "hungry"],
   },
   {
@@ -192,7 +192,7 @@ export const MEALS: Meal[] = [
     prepTime: 17,
     satiety: "Medium",
     price: "$$",
-    tags: ["Balanced", "Sweet is OK"],
+    tags: ["Balanced Meal", "Fresh"],
     moods: ["fast"],
   },
   {
@@ -207,7 +207,7 @@ export const MEALS: Meal[] = [
     prepTime: 8,
     satiety: "Medium",
     price: "$",
-    tags: ["Fast", "Comfort"],
+    tags: ["Fast Prep", "Best Value"],
     moods: ["fast"],
   },
 ];

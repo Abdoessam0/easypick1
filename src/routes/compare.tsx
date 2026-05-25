@@ -62,7 +62,7 @@ function ComparePage() {
   }
 
   const ctx: CompareCtx =
-    mode === "smart" ? { kind: "smart", prefs } : { kind: "mood", mood: mood ?? "hungry" };
+    mode === "smart" ? { kind: "smart", prefs } : { kind: "mood", mood: mood ?? "Hungry" };
 
   let winnerMeal = meals[0];
   if (ctx.kind === "smart") {
@@ -154,7 +154,7 @@ function ComparePage() {
             label: "Calories",
             get: (m) => m.calories,
             display: (m) => `${m.calories} kcal`,
-            preferHigher: mood === "hungry",
+            preferHigher: mood === "Hungry",
           },
           {
             key: "prep",
@@ -277,10 +277,10 @@ function reasonShort(meal: Meal, ctx: CompareCtx) {
   if (ctx.kind === "smart") {
     return `It has the strongest preference fit across energy, protein, sugar, and calories, with ${meal.protein}g protein and ${meal.calories} kcal.`;
   }
-  if (ctx.mood === "hungry") {
+  if (ctx.mood === "Hungry") {
     return `It wins for a Hungry mood because it has ${meal.satiety.toLowerCase()} satiety, a filling calorie load, and strong value.`;
   }
-  if (ctx.mood === "light") {
+  if (ctx.mood === "Light") {
     return `It wins for a Light mood because it keeps calories manageable while still feeling satisfying.`;
   }
   return `It wins for a Fast mood because it is ready in ${meal.prepTime} minutes with clear value and enough satiety.`;

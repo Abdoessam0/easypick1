@@ -20,21 +20,21 @@ const moods: {
   img: string;
 }[] = [
   {
-    key: "hungry",
+    key: "Hungry",
     label: "Hungry",
     desc: "Filling meals with higher satiety",
     summary: "We'll prioritize satiety and filling portions.",
     img: burger,
   },
   {
-    key: "light",
+    key: "Light",
     label: "Light",
     desc: "Fresh meals with lower calories",
     summary: "We'll prioritize lower calories and balanced nutrition.",
     img: salmon,
   },
   {
-    key: "fast",
+    key: "Fast",
     label: "Fast",
     desc: "Ready in 15 minutes or less",
     summary: "We'll prioritize the fastest prep times.",

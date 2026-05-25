@@ -92,7 +92,11 @@ function ResultsPage() {
               <ShoppingBasket className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <div className="font-bold leading-tight">Pick 3 meals to compare</div>
+              <div className="font-bold leading-tight">
+                {compare.length === REQUIRED_COMPARE_COUNT
+                  ? "3 meals selected"
+                  : "Pick 3 meals to compare"}
+              </div>
               <div className="text-xs text-muted-foreground">{trayMessage}</div>
             </div>
           </div>

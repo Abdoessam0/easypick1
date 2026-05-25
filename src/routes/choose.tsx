@@ -212,8 +212,8 @@ function buildReasons(meal: Meal, mode: string | null, mood: string | null) {
     });
     reasons.push({
       icon: Flame,
-      title: mood === "light" ? "Fits your calorie target" : "Right calorie load",
-      body: `${meal.calories} kcal matches a ${mood ?? "quick"} mood.`,
+      title: mood === "Light" ? "Fits your calorie target" : "Right calorie load",
+      body: `${meal.calories} kcal matches a ${mood ?? "Quick"} mood.`,
     });
     reasons.push({
       icon: Clock,

@@ -10,19 +10,27 @@ import {
   ChevronRight,
   ChevronLeft,
   Heart,
+  Zap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/smart")({
   component: SmartPage,
 });
 
-const sliders: {
+const controls: {
   key: keyof Prefs;
   icon: React.ElementType;
   title: string;
   q: string;
   labels: [string, string, string];
 }[] = [
+  {
+    key: "energy",
+    icon: Zap,
+    title: "Energy",
+    q: "How energized should the meal feel?",
+    labels: ["Light", "Balanced", "Energizing"],
+  },
   {
     key: "protein",
     icon: Dumbbell,
@@ -31,18 +39,18 @@ const sliders: {
     labels: ["Balanced", "Normal", "High Protein"],
   },
   {
-    key: "calories",
-    icon: Flame,
-    title: "Calories",
-    q: "What kind of meal fits your day?",
-    labels: ["Light", "Normal", "Filling"],
-  },
-  {
     key: "sugar",
     icon: Candy,
     title: "Sugar",
     q: "How sweet would you like it?",
     labels: ["Less Sweet", "Normal", "Sweet OK"],
+  },
+  {
+    key: "calories",
+    icon: Flame,
+    title: "Calories",
+    q: "What kind of meal fits your day?",
+    labels: ["Light", "Normal", "Filling"],
   },
 ];
 
@@ -67,21 +75,21 @@ function SmartPage() {
       <PageTitle
         title="Let's make it"
         accent="just right for you"
-        subtitle="Set your nutrition preferences. We'll handle the rest."
+        subtitle="Set your Energy, Protein, Sugar, and Calories preferences. We'll handle the rest."
       />
 
       <section className="glass mx-auto mt-8 flex max-w-5xl flex-col gap-2 rounded-[2rem] p-6 shadow-soft md:p-8">
-        {sliders.map((s, idx) => {
+        {controls.map((s, idx) => {
           const Icon = s.icon;
           const val = prefs[s.key];
           return (
             <div
               key={s.key}
               className={`flex flex-col gap-4 py-5 md:flex-row md:items-center md:gap-6 ${
-                idx < sliders.length - 1 ? "border-b border-border" : ""
+                idx < controls.length - 1 ? "border-b border-border" : ""
               }`}
             >
-              <div className="flex items-center gap-4 md:w-60 md:shrink-0">
+              <div className="flex items-center gap-4 md:w-64 md:shrink-0">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
                   <Icon className="h-6 w-6 text-primary" />
                 </div>
@@ -99,7 +107,7 @@ function SmartPage() {
                       <button
                         key={i}
                         onClick={() => setLevel(s.key, i as LevelTriple)}
-                        className={`min-h-[52px] rounded-2xl px-3 py-3 text-sm font-bold transition ${
+                        className={`min-h-[56px] rounded-2xl px-3 py-3 text-sm font-bold transition ${
                           active
                             ? "bg-primary text-primary-foreground shadow-glow"
                             : "bg-card text-foreground/70 shadow-soft hover:bg-primary-soft"
@@ -118,7 +126,7 @@ function SmartPage() {
         <div className="glass-soft mt-2 flex items-center gap-3 rounded-2xl p-4">
           <Heart className="h-5 w-5 text-primary" />
           <p className="text-sm text-foreground/75">
-            The more accurate your preferences, the better we match.
+            Smart Pick uses your nutrition preferences to personalize the best matches.
           </p>
         </div>
       </section>

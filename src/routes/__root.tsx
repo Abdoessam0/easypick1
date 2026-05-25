@@ -11,6 +11,11 @@ import {
 import appCss from "../styles.css?url";
 import { EasypickProvider } from "@/lib/easypick-context";
 
+const brandTitle = "Easypick - Smart restaurant table";
+const brandDescription =
+  "Easypick is a smart restaurant decision-support experience that helps diners choose meals faster with Quick Pick moods and Smart Pick nutrition preferences.";
+const brandImage = "/easypick-logo.svg";
+
 function NotFoundComponent() {
   return (
     <div className="bg-canvas flex min-h-screen items-center justify-center px-4">
@@ -68,28 +73,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Easypick — Smart restaurant table" },
-      {
-        name: "description",
-        content:
-          "Easypick is a smart restaurant tabletop experience that helps diners choose meals faster with mood-based and personalized recommendations.",
-      },
-      { property: "og:title", content: "Easypick — Smart restaurant table" },
-      {
-        property: "og:description",
-        content:
-          "Decide what to eat in seconds. Quick Pick by mood or Smart Pick by preference, with side-by-side comparison.",
-      },
+      { title: brandTitle },
+      { name: "description", content: brandDescription },
+      { property: "og:title", content: brandTitle },
+      { property: "og:description", content: brandDescription },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Easypick — Smart restaurant table" },
-      { name: "description", content: "Tabletop Taste Navigator is a smart restaurant decision-support app for interactive table screens." },
-      { property: "og:description", content: "Tabletop Taste Navigator is a smart restaurant decision-support app for interactive table screens." },
-      { name: "twitter:description", content: "Tabletop Taste Navigator is a smart restaurant decision-support app for interactive table screens." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/b15829c7-a9e5-4491-bba0-c3bfedca0fbb" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/b15829c7-a9e5-4491-bba0-c3bfedca0fbb" },
+      { property: "og:image", content: brandImage },
+      { name: "twitter:title", content: brandTitle },
+      { name: "twitter:description", content: brandDescription },
+      { name: "twitter:image", content: brandImage },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "icon", type: "image/svg+xml", href: "/easypick-logo.svg" },
       {
         rel: "preconnect",
         href: "https://fonts.googleapis.com",

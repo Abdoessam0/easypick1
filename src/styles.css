@@ -61,8 +61,8 @@
   --popover: oklch(0.99 0.008 40);
   --popover-foreground: oklch(0.18 0.02 30);
 
-  /* Vivid warm red ~#D71920 */
-  --primary: oklch(0.575 0.22 27);
+  /* Brand red #C21318 */
+  --primary: oklch(0.515 0.21 27);
   --primary-foreground: oklch(0.99 0.005 30);
   --primary-soft: oklch(0.95 0.04 25);
 
@@ -75,7 +75,7 @@
   --accent: oklch(0.93 0.05 25);
   --accent-foreground: oklch(0.25 0.05 25);
 
-  --destructive: oklch(0.575 0.22 27);
+  --destructive: oklch(0.515 0.21 27);
   --destructive-foreground: oklch(0.99 0.005 30);
 
   --success: oklch(0.62 0.14 145);
@@ -85,7 +85,7 @@
 
   --border: oklch(0.9 0.015 30);
   --input: oklch(0.92 0.015 30);
-  --ring: oklch(0.575 0.22 27);
+  --ring: oklch(0.515 0.21 27);
 }
 
 @layer base {

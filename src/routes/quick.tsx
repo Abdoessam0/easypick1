@@ -73,9 +73,7 @@ function QuickPage() {
                 setMood(m.key);
               }}
               className={`glass relative flex flex-col items-center gap-4 rounded-[2rem] p-6 text-center transition hover:-translate-y-1 hover:shadow-glow ${
-                active
-                  ? "ring-2 ring-primary shadow-glow border-primary/50"
-                  : ""
+                active ? "ring-2 ring-primary shadow-glow border-primary/50" : ""
               }`}
             >
               {active && (
@@ -107,8 +105,7 @@ function QuickPage() {
           </div>
           <div>
             <div className="font-bold">
-              You selected:{" "}
-              <span className="text-primary">{selected.label}</span>
+              You selected: <span className="text-primary">{selected.label}</span>
             </div>
             <div className="text-muted-foreground">{selected.summary}</div>
           </div>
@@ -123,11 +120,7 @@ function QuickPage() {
         >
           Show best matches <ChevronRight className="h-5 w-5" />
         </button>
-        {!mood && (
-          <div className="text-sm text-muted-foreground">
-            Pick a mood to continue.
-          </div>
-        )}
+        {!mood && <div className="text-sm text-muted-foreground">Pick a mood to continue.</div>}
       </div>
     </Shell>
   );

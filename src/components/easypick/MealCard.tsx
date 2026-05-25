@@ -51,18 +51,14 @@ export function MealCard({
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div>
           <h3 className="text-xl font-bold leading-tight">{meal.name}</h3>
-          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
-            {meal.description}
-          </p>
+          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{meal.description}</p>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
           {meal.tags.slice(0, 3).map((t) => (
             <span
               key={t}
-              className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${tagColor(
-                t
-              )}`}
+              className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${tagColor(t)}`}
             >
               {t}
             </span>
@@ -102,22 +98,12 @@ export function MealCard({
   );
 }
 
-function Metric({
-  icon,
-  value,
-  label,
-}: {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-}) {
+function Metric({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-0.5 rounded-2xl bg-primary-soft/40 py-2">
       <div className="text-primary">{icon}</div>
       <div className="text-sm font-bold leading-none">{value}</div>
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
-        {label}
-      </div>
+      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
     </div>
   );
 }

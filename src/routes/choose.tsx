@@ -60,16 +60,10 @@ function ChoosePage() {
             <Star className="h-3 w-3 fill-current" /> YOUR CHOICE
           </div>
           <div className="aspect-square w-full overflow-hidden rounded-3xl bg-primary-soft/40">
-            <img
-              src={winner.image}
-              alt={winner.name}
-              className="h-full w-full object-cover"
-            />
+            <img src={winner.image} alt={winner.name} className="h-full w-full object-cover" />
           </div>
           <h2 className="text-2xl font-extrabold">{winner.name}</h2>
-          <p className="text-center text-sm text-muted-foreground">
-            {winner.description}
-          </p>
+          <p className="text-center text-sm text-muted-foreground">{winner.description}</p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <Stat icon={Flame} value={`${winner.calories} kcal`} />
             <Stat icon={Clock} value={`${winner.prepTime} min`} />
@@ -80,11 +74,7 @@ function ChoosePage() {
         <div className="glass rounded-[2rem] p-6">
           <h3 className="text-xl font-bold">Why it&rsquo;s the best match for you</h3>
           <p className="mt-1 text-sm text-muted-foreground">
-            Based on your{" "}
-            {mode === "smart"
-              ? "Smart Pick preferences"
-              : `${mood ?? "quick"} mood`}
-            .
+            Based on your {mode === "smart" ? "Smart Pick preferences" : `${mood ?? "quick"} mood`}.
           </p>
           <ul className="mt-5 space-y-4">
             {reasons.map((r) => (
@@ -129,9 +119,7 @@ function ChoosePage() {
               </div>
               <div>
                 <div className="font-bold text-primary">Thank you!</div>
-                <div className="text-sm text-muted-foreground">
-                  Enjoy your meal.
-                </div>
+                <div className="text-sm text-muted-foreground">Enjoy your meal.</div>
               </div>
             </div>
           </div>
@@ -271,7 +259,7 @@ function QRBlock() {
               ? r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)
               : cells[i];
             return on ? <rect key={i} x={c} y={r} width={1} height={1} /> : null;
-          })
+          }),
         )}
       </svg>
     </div>

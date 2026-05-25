@@ -21,8 +21,7 @@ function OrderPage() {
           <Check className="h-10 w-10" strokeWidth={3} />
         </div>
         <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
-          Your order is{" "}
-          <span className="text-gradient-primary">on its way!</span>
+          Your order is <span className="text-gradient-primary">on its way!</span>
         </h1>
         <p className="mt-3 text-lg text-muted-foreground">
           Show this QR at the counter or wait — the kitchen has your order.
@@ -31,19 +30,13 @@ function OrderPage() {
 
       <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
         <div className="glass flex items-center gap-5 rounded-[2rem] p-6">
-          <img
-            src={meal.image}
-            alt={meal.name}
-            className="h-32 w-32 rounded-2xl object-cover"
-          />
+          <img src={meal.image} alt={meal.name} className="h-32 w-32 rounded-2xl object-cover" />
           <div>
             <div className="text-xs font-bold uppercase tracking-wider text-primary">
               Confirmed order
             </div>
             <h2 className="mt-1 text-2xl font-extrabold">{meal.name}</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {meal.description}
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">{meal.description}</p>
             <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-success/15 px-3 py-1 text-xs font-bold text-success">
               <Sparkles className="h-3 w-3" /> Ready in {meal.prepTime} min
             </div>
@@ -99,21 +92,19 @@ function FakeQR() {
           const r = Math.floor(i / size);
           const c = i % size;
           seed = (seed * 1103515245 + 12345) & 0x7fffffff;
-          const inCorner =
-            (r < 7 && c < 7) ||
-            (r < 7 && c >= size - 7) ||
-            (r >= size - 7 && c < 7);
+          const inCorner = (r < 7 && c < 7) || (r < 7 && c >= size - 7) || (r >= size - 7 && c < 7);
           if (inCorner) {
             const rr = r < 7 ? r : size - 1 - r;
             const cc = c < 7 ? c : c >= size - 7 ? size - 1 - c : c;
             const on =
-              rr === 0 || rr === 6 || cc === 0 || cc === 6 ||
+              rr === 0 ||
+              rr === 6 ||
+              cc === 0 ||
+              cc === 6 ||
               (rr >= 2 && rr <= 4 && cc >= 2 && cc <= 4);
             return on ? <rect key={i} x={c} y={r} width={1} height={1} /> : null;
           }
-          return seed % 2 === 0 ? (
-            <rect key={i} x={c} y={r} width={1} height={1} />
-          ) : null;
+          return seed % 2 === 0 ? <rect key={i} x={c} y={r} width={1} height={1} /> : null;
         })}
       </svg>
     </div>

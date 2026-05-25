@@ -13,9 +13,7 @@ export function BottomNav() {
   const loc = useLocation();
   const nav = useNavigate();
   const { reset, mode, mood, prefs, compare, finalChoice } = useEasypick();
-  const activeIdx = steps.findIndex((s) =>
-    s.paths.some((p) => loc.pathname.startsWith(p))
-  );
+  const activeIdx = steps.findIndex((s) => s.paths.some((p) => loc.pathname.startsWith(p)));
 
   const moodReady = mode === "quick" ? !!mood : mode === "smart" ? !!prefs : false;
   const compareReady = compare.length === 3;

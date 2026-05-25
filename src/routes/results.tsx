@@ -3,20 +3,8 @@ import { Shell } from "@/components/easypick/Shell";
 import { PageTitle } from "@/components/easypick/PageTitle";
 import { MealCard } from "@/components/easypick/MealCard";
 import { useEasypick } from "@/lib/easypick-context";
-import {
-  getMealsByMood,
-  getSmartMatches,
-  getMealById,
-  type Meal,
-} from "@/lib/meals";
-import {
-  ChevronLeft,
-  ChevronRight,
-  X,
-  ShoppingBasket,
-  Sparkles,
-  Trash2,
-} from "lucide-react";
+import { getMealsByMood, getSmartMatches, getMealById, type Meal } from "@/lib/meals";
+import { ChevronLeft, ChevronRight, X, ShoppingBasket, Sparkles, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/results")({
   component: ResultsPage,
@@ -25,8 +13,7 @@ export const Route = createFileRoute("/results")({
 const REQUIRED_COMPARE_COUNT = 3;
 
 function ResultsPage() {
-  const { mode, mood, prefs, compare, toggleCompare, removeCompare, clearCompare } =
-    useEasypick();
+  const { mode, mood, prefs, compare, toggleCompare, removeCompare, clearCompare } = useEasypick();
   const nav = useNavigate();
 
   if (!mode) return <Navigate to="/mode" />;
@@ -79,9 +66,7 @@ function ResultsPage() {
         {meals.length === 0 ? (
           <div className="glass mx-auto max-w-md rounded-3xl p-10 text-center shadow-soft">
             <h3 className="text-lg font-bold">No matches found</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Try changing your mood or filters.
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">Try changing your mood or filters.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -164,11 +149,7 @@ function CompareSlot({
   if (meal) {
     return (
       <div className="flex min-h-[56px] items-center gap-2 rounded-2xl bg-primary-soft/40 p-2 pr-3">
-        <img
-          src={meal.image}
-          alt={meal.name}
-          className="h-10 w-10 rounded-xl object-cover"
-        />
+        <img src={meal.image} alt={meal.name} className="h-10 w-10 rounded-xl object-cover" />
         <div className="flex-1 truncate text-xs font-semibold">{meal.name}</div>
         <button
           onClick={() => onClear(meal.id)}

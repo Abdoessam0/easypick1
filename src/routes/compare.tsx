@@ -2,13 +2,7 @@ import { createFileRoute, useNavigate, Link, Navigate } from "@tanstack/react-ro
 import { useEffect } from "react";
 import { Shell } from "@/components/easypick/Shell";
 import { useEasypick } from "@/lib/easypick-context";
-import {
-  getMealById,
-  pickWinner,
-  scoreMeal,
-  type CompareCtx,
-  type Meal,
-} from "@/lib/meals";
+import { getMealById, pickWinner, scoreMeal, type CompareCtx, type Meal } from "@/lib/meals";
 import {
   Flame,
   Heart,
@@ -34,19 +28,18 @@ function ComparePage() {
   const { compare, mode, mood, prefs, setFinalChoice } = useEasypick();
   const nav = useNavigate();
 
-  if (!mode) return <Navigate to="/mode" />;
-
-  const meals = compare
-    .map((id) => getMealById(id))
-    .filter((m): m is Meal => !!m);
-  const hasExactlyThreeMeals = compare.length === REQUIRED_COMPARE_COUNT && meals.length === REQUIRED_COMPARE_COUNT;
+  const meals = compare.map((id) => getMealById(id)).filter((m): m is Meal => !!m);
+  const hasExactlyThreeMeals =
+    compare.length === REQUIRED_COMPARE_COUNT && meals.length === REQUIRED_COMPARE_COUNT;
 
   useEffect(() => {
-    if (!hasExactlyThreeMeals) {
+    if (mode && !hasExactlyThreeMeals) {
       const timer = window.setTimeout(() => nav({ to: "/results" }), 1400);
       return () => window.clearTimeout(timer);
     }
-  }, [hasExactlyThreeMeals, nav]);
+  }, [hasExactlyThreeMeals, mode, nav]);
+
+  if (!mode) return <Navigate to="/mode" />;
 
   if (!hasExactlyThreeMeals) {
     return (
@@ -54,7 +47,8 @@ function ComparePage() {
         <div className="glass mx-auto mt-16 max-w-lg rounded-[2rem] p-8 text-center shadow-soft">
           <h1 className="text-3xl font-extrabold text-gradient-primary">Pick 3 meals to compare</h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Compare works with exactly 3 selected meals. We'll send you back to Results so you can finish your selection.
+            Compare works with exactly 3 selected meals. We'll send you back to Results so you can
+            finish your selection.
           </p>
           <button
             onClick={() => nav({ to: "/results" })}
@@ -68,9 +62,7 @@ function ComparePage() {
   }
 
   const ctx: CompareCtx =
-    mode === "smart"
-      ? { kind: "smart", prefs }
-      : { kind: "mood", mood: mood ?? "hungry" };
+    mode === "smart" ? { kind: "smart", prefs } : { kind: "mood", mood: mood ?? "hungry" };
 
   let winnerMeal = meals[0];
   if (ctx.kind === "smart") {
@@ -225,7 +217,9 @@ function ComparePage() {
                 const isBest = mt.get(m) === best && vals.filter((v) => v === best).length === 1;
                 return (
                   <div key={m.id} className="flex flex-col items-center gap-1 text-center">
-                    <div className={`text-sm font-bold ${isBest ? "text-primary" : "text-foreground/70"}`}>
+                    <div
+                      className={`text-sm font-bold ${isBest ? "text-primary" : "text-foreground/70"}`}
+                    >
                       {mt.display(m)}
                     </div>
                     {isBest && (
@@ -312,9 +306,7 @@ function MealHero({ meal, index, winner }: { meal: Meal; index: number; winner: 
       </div>
       <div className="min-w-0 flex-1">
         <h3 className="truncate text-lg font-extrabold leading-tight">{meal.name}</h3>
-        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
-          {meal.description}
-        </p>
+        <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{meal.description}</p>
         <div className="mt-2 flex flex-wrap gap-2 text-xs">
           <span className="inline-flex items-center gap-1 font-semibold">
             <Flame className="h-3.5 w-3.5 text-primary" /> {meal.calories}

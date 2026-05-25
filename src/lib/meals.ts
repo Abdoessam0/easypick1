@@ -212,11 +212,9 @@ export const MEALS: Meal[] = [
   },
 ];
 
-export const getMealsByMood = (mood: Mood): Meal[] =>
-  MEALS.filter((m) => m.moods.includes(mood));
+export const getMealsByMood = (mood: Mood): Meal[] => MEALS.filter((m) => m.moods.includes(mood));
 
-export const getMealById = (id: string): Meal | undefined =>
-  MEALS.find((m) => m.id === id);
+export const getMealById = (id: string): Meal | undefined => MEALS.find((m) => m.id === id);
 
 /* Smart Pick scoring */
 export type LevelTriple = 0 | 1 | 2; // 0 low, 1 normal, 2 high
@@ -252,9 +250,7 @@ export const getSmartMatches = (prefs: Prefs): { meal: Meal; match: number }[] =
 };
 
 /* Comparison logic — returns "a" | "b" | "tie" per metric and overall */
-export type CompareCtx =
-  | { kind: "mood"; mood: Mood }
-  | { kind: "smart"; prefs: Prefs };
+export type CompareCtx = { kind: "mood"; mood: Mood } | { kind: "smart"; prefs: Prefs };
 
 export const pickWinner = (a: Meal, b: Meal, ctx: CompareCtx) => {
   if (ctx.kind === "smart") {
@@ -279,11 +275,7 @@ export const pickWinner = (a: Meal, b: Meal, ctx: CompareCtx) => {
 };
 
 /* Per-metric "better" depending on context */
-export const metricBetter = (
-  a: number,
-  b: number,
-  preferHigher: boolean
-): "a" | "b" | "tie" => {
+export const metricBetter = (a: number, b: number, preferHigher: boolean): "a" | "b" | "tie" => {
   if (a === b) return "tie";
   return preferHigher ? (a > b ? "a" : "b") : a < b ? "a" : "b";
 };

@@ -22,9 +22,7 @@ function NotFoundComponent() {
       <div className="glass max-w-md rounded-3xl p-10 text-center shadow-soft">
         <h1 className="text-7xl font-extrabold text-gradient-primary">404</h1>
         <h2 className="mt-4 text-xl font-semibold">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          That page is off the menu.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">That page is off the menu.</p>
         <div className="mt-6">
           <Link
             to="/"

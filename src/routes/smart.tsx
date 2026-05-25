@@ -3,15 +3,7 @@ import { Shell } from "@/components/easypick/Shell";
 import { PageTitle } from "@/components/easypick/PageTitle";
 import { useEasypick } from "@/lib/easypick-context";
 import type { LevelTriple, Prefs } from "@/lib/meals";
-import {
-  Dumbbell,
-  Flame,
-  Candy,
-  ChevronRight,
-  ChevronLeft,
-  Heart,
-  Zap,
-} from "lucide-react";
+import { Dumbbell, Flame, Candy, ChevronRight, ChevronLeft, Heart, Zap } from "lucide-react";
 
 export const Route = createFileRoute("/smart")({
   component: SmartPage,

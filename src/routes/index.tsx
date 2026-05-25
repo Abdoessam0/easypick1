@@ -35,9 +35,7 @@ function Welcome() {
 
         <div className="glass mt-12 inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm">
           <Users className="h-4 w-4 text-primary" />
-          <span>
-            Designed for a shared experience. Everyone can explore together!
-          </span>
+          <span>Designed for a shared experience. Everyone can explore together!</span>
         </div>
       </div>
 

@@ -1,7 +1,20 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRouteWithContext,
+  useRouter,
+  HeadContent,
+  Scripts,
+} from "@tanstack/react-router";
 
+import appCss from "../styles.css?url";
 import { EasypickProvider } from "@/lib/easypick-context";
+
+const brandTitle = "Easypick - Smart restaurant table";
+const brandDescription =
+  "Easypick is a smart restaurant decision-support experience that helps diners choose meals faster with Quick Pick moods and Smart Pick nutrition preferences.";
+const brandImage = "/easypick-logo.svg";
 
 function NotFoundComponent() {
   return (
@@ -54,10 +67,58 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: brandTitle },
+      { name: "description", content: brandDescription },
+      { property: "og:title", content: brandTitle },
+      { property: "og:description", content: brandDescription },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: brandImage },
+      { name: "twitter:title", content: brandTitle },
+      { name: "twitter:description", content: brandDescription },
+      { name: "twitter:image", content: brandImage },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [
+      { rel: "icon", type: "image/svg+xml", href: "/easypick-logo.svg" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+      },
+      { rel: "stylesheet", href: appCss },
+    ],
+  }),
+  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
+
+function RootShell({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();

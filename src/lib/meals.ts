@@ -11,7 +11,7 @@ import alfredo from "@/assets/meal-alfredo.jpg";
 import fries from "@/assets/meal-fries.jpg";
 import soup from "@/assets/meal-soup.jpg";
 
-export type Mood = "Hungry" | "Light" | "Fast";
+export type Mood = "hungry" | "light" | "fast";
 
 export type Meal = {
   id: string;
@@ -43,7 +43,7 @@ export const MEALS: Meal[] = [
     satiety: "High",
     price: "$$",
     tags: ["Filling", "Best Value"],
-    moods: ["Hungry"],
+    moods: ["hungry"],
   },
   {
     id: "grilled-chicken",
@@ -58,7 +58,7 @@ export const MEALS: Meal[] = [
     satiety: "High",
     price: "$$",
     tags: ["High Protein", "Balanced Meal"],
-    moods: ["Hungry"],
+    moods: ["hungry"],
   },
   {
     id: "alfredo",
@@ -73,7 +73,7 @@ export const MEALS: Meal[] = [
     satiety: "High",
     price: "$$",
     tags: ["Filling", "Balanced Meal"],
-    moods: ["Hungry"],
+    moods: ["hungry"],
   },
   {
     id: "fries",
@@ -88,7 +88,7 @@ export const MEALS: Meal[] = [
     satiety: "High",
     price: "$",
     tags: ["Filling", "Best Value"],
-    moods: ["Hungry"],
+    moods: ["hungry"],
   },
   {
     id: "chicken-bowl",
@@ -103,7 +103,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$$",
     tags: ["High Protein", "Low Sugar"],
-    moods: ["Light"],
+    moods: ["light"],
   },
   {
     id: "tofu",
@@ -118,7 +118,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$$",
     tags: ["Balanced Meal", "Low Calorie"],
-    moods: ["Light"],
+    moods: ["light"],
   },
   {
     id: "salmon",
@@ -133,7 +133,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$$$",
     tags: ["High Protein", "Fresh"],
-    moods: ["Light"],
+    moods: ["light"],
   },
   {
     id: "lentil",
@@ -148,7 +148,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$",
     tags: ["Low Calorie", "Best Value"],
-    moods: ["Light"],
+    moods: ["light"],
   },
   {
     id: "wrap",
@@ -163,7 +163,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$$",
     tags: ["Fast Prep", "Balanced Meal"],
-    moods: ["Fast", "Hungry"],
+    moods: ["fast", "hungry"],
   },
   {
     id: "shrimp",
@@ -178,7 +178,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$$",
     tags: ["High Protein", "Fresh"],
-    moods: ["Fast", "Light"],
+    moods: ["fast", "light"],
   },
   {
     id: "pesto",
@@ -193,7 +193,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$$",
     tags: ["Balanced Meal", "Fresh"],
-    moods: ["Fast"],
+    moods: ["fast"],
   },
   {
     id: "soup",
@@ -208,7 +208,7 @@ export const MEALS: Meal[] = [
     satiety: "Medium",
     price: "$",
     tags: ["Fast Prep", "Best Value"],
-    moods: ["Fast"],
+    moods: ["fast"],
   },
 ];
 
@@ -261,10 +261,10 @@ export const pickWinner = (a: Meal, b: Meal, ctx: CompareCtx) => {
   const mood = ctx.mood;
   let sa = 0;
   let sb = 0;
-  if (mood === "Hungry") {
+  if (mood === "hungry") {
     sa = (a.satiety === "High" ? 2 : a.satiety === "Medium" ? 1 : 0) + a.calories / 1000;
     sb = (b.satiety === "High" ? 2 : b.satiety === "Medium" ? 1 : 0) + b.calories / 1000;
-  } else if (mood === "Light") {
+  } else if (mood === "light") {
     sa = (a.calories < 500 ? 2 : 0) + (a.sugar < 8 ? 1 : 0) + a.protein / 60;
     sb = (b.calories < 500 ? 2 : 0) + (b.sugar < 8 ? 1 : 0) + b.protein / 60;
   } else {

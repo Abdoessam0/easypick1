@@ -7,7 +7,7 @@ type EasypickState = {
   mode: FlowMode;
   mood: Mood | null;
   prefs: Prefs;
-  compare: string[]; // meal ids, max 3
+  compare: string[]; // meal ids, exactly 3 required for compare
   finalChoice: string | null;
   isRotatedView: boolean;
 };
@@ -26,19 +26,33 @@ type EasypickCtx = EasypickState & {
   reset: () => void;
 };
 
-const defaultPrefs: Prefs = { protein: 1, calories: 1, sugar: 1, energy: 1 };
+const defaultPrefs: Prefs = { energy: 1, protein: 1, sugar: 1, calories: 1 };
 
 const MAX_COMPARE = 3;
 
 const Ctx = createContext<EasypickCtx | null>(null);
 
 export function EasypickProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<FlowMode>(null);
+  const [mode, setModeState] = useState<FlowMode>(null);
   const [mood, setMood] = useState<Mood | null>(null);
   const [prefs, setPrefs] = useState<Prefs>(defaultPrefs);
   const [compare, setCompare] = useState<string[]>([]);
   const [finalChoice, setFinalChoice] = useState<string | null>(null);
   const [isRotatedView, setIsRotated] = useState(false);
+
+  const clearSelection = () => {
+    setMood(null);
+    setPrefs(defaultPrefs);
+    setCompare([]);
+    setFinalChoice(null);
+  };
+
+  const selectMode = (nextMode: FlowMode) => {
+    setModeState((currentMode) => {
+      if (currentMode !== nextMode) clearSelection();
+      return nextMode;
+    });
+  };
 
   const toggleCompare = (id: string) => {
     setCompare((prev) => {
@@ -46,12 +60,6 @@ export function EasypickProvider({ children }: { children: ReactNode }) {
       if (prev.length >= MAX_COMPARE) return prev;
       return [...prev, id];
     });
-  };
-
-  const clearSelection = () => {
-    setMood(null);
-    setPrefs(defaultPrefs);
-    setCompare([]);
     setFinalChoice(null);
   };
 
@@ -62,21 +70,27 @@ export function EasypickProvider({ children }: { children: ReactNode }) {
     compare,
     finalChoice,
     isRotatedView,
-    setMode,
+    setMode: selectMode,
     changeMode: () => {
       clearSelection();
-      setMode(null);
+      setModeState(null);
     },
     setMood,
     setPrefs,
     toggleCompare,
-    removeCompare: (id) => setCompare((p) => p.filter((x) => x !== id)),
-    clearCompare: () => setCompare([]),
+    removeCompare: (id) => {
+      setCompare((p) => p.filter((x) => x !== id));
+      setFinalChoice(null);
+    },
+    clearCompare: () => {
+      setCompare([]);
+      setFinalChoice(null);
+    },
     setFinalChoice,
     toggleRotate: () => setIsRotated((v) => !v),
     restartSelection: clearSelection,
     reset: () => {
-      setMode(null);
+      setModeState(null);
       clearSelection();
     },
   };

@@ -15,6 +15,7 @@ import {
   RefreshCw,
   Star,
   Smile,
+  DollarSign,
 } from "lucide-react";
 
 export const Route = createFileRoute("/choose")({
@@ -28,8 +29,10 @@ function ChoosePage() {
   if (!finalChoice) return <Navigate to="/results" />;
 
   const winner = getMealById(finalChoice)!;
-  const otherId = compare.find((id) => id !== finalChoice);
-  const other = otherId ? getMealById(otherId) : null;
+  const otherMeals = compare
+    .filter((id) => id !== finalChoice)
+    .map((id) => getMealById(id))
+    .filter((meal): meal is Meal => !!meal);
 
   const reasons = buildReasons(winner, mode, mood);
 
@@ -45,12 +48,13 @@ function ChoosePage() {
           </h1>
         </div>
         <p className="mt-3 text-lg text-muted-foreground">
-          You picked the best match for your craving.
+          {mode === "smart"
+            ? "Your final meal matches your Smart Pick nutrition preferences."
+            : "Your final meal matches your Quick Pick mood."}
         </p>
       </div>
 
       <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-[1.1fr_1.4fr_0.9fr]">
-        {/* Winner */}
         <div className="glass relative flex flex-col items-center gap-3 rounded-[2rem] p-6">
           <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground shadow-glow">
             <Star className="h-3 w-3 fill-current" /> YOUR CHOICE
@@ -73,14 +77,13 @@ function ChoosePage() {
           </div>
         </div>
 
-        {/* Reasons */}
         <div className="glass rounded-[2rem] p-6">
           <h3 className="text-xl font-bold">Why it&rsquo;s the best match for you</h3>
           <p className="mt-1 text-sm text-muted-foreground">
             Based on your{" "}
             {mode === "smart"
               ? "Smart Pick preferences"
-              : `${mood} mood`}
+              : `${mood ?? "quick"} mood`}
             .
           </p>
           <ul className="mt-5 space-y-4">
@@ -98,28 +101,27 @@ function ChoosePage() {
           </ul>
         </div>
 
-        {/* Alternative */}
         <div className="flex flex-col gap-4">
-          {other && (
-            <div className="glass-soft rounded-[2rem] p-5">
+          {otherMeals.slice(0, 2).map((meal, index) => (
+            <div key={meal.id} className="glass-soft rounded-[2rem] p-5">
               <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Runner up
+                {index === 0 ? "Runner up" : "Also compared"}
               </div>
               <div className="mt-3 flex items-center gap-3">
                 <img
-                  src={other.image}
-                  alt={other.name}
+                  src={meal.image}
+                  alt={meal.name}
                   className="h-20 w-20 rounded-2xl object-cover"
                 />
                 <div>
-                  <div className="font-bold">{other.name}</div>
+                  <div className="font-bold">{meal.name}</div>
                   <div className="text-xs text-muted-foreground">
-                    {other.calories} kcal · {other.prepTime} min
+                    {meal.calories} kcal · {meal.prepTime} min
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          ))}
           <div className="glass rounded-[2rem] p-5">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-success/15 text-success">
@@ -128,7 +130,7 @@ function ChoosePage() {
               <div>
                 <div className="font-bold text-primary">Thank you!</div>
                 <div className="text-sm text-muted-foreground">
-                  Your healthy choice makes a difference. Enjoy your meal!
+                  Enjoy your meal.
                 </div>
               </div>
             </div>
@@ -136,7 +138,6 @@ function ChoosePage() {
         </div>
       </div>
 
-      {/* QR action */}
       <div className="glass mx-auto mt-6 flex max-w-6xl flex-col items-center justify-between gap-5 rounded-[2rem] p-6 md:flex-row">
         <div className="flex items-center gap-4">
           <QRBlock />
@@ -158,7 +159,7 @@ function ChoosePage() {
             to="/results"
             className="flex items-center gap-2 rounded-full border border-border bg-card px-6 py-4 text-sm font-bold"
           >
-            <RefreshCw className="h-4 w-4" /> CHOOSE ANOTHER
+            <RefreshCw className="h-4 w-4" /> Change selected meals
           </Link>
           <button
             onClick={() => {
@@ -167,7 +168,7 @@ function ChoosePage() {
             }}
             className="text-sm font-semibold text-muted-foreground hover:text-primary"
           >
-            Start over
+            Restart selection
           </button>
         </div>
       </div>
@@ -188,57 +189,56 @@ function buildReasons(meal: Meal, mode: string | null, mood: string | null) {
   const reasons: { icon: React.ElementType; title: string; body: string }[] = [];
 
   if (mode === "smart") {
-    // Smart Pick: nutrition-focused
+    reasons.push({
+      icon: Zap,
+      title: "Energy fit",
+      body: "Chosen for the best overall energy fit across the meals you compared.",
+    });
     if (meal.protein >= 25) {
       reasons.push({
         icon: Dumbbell,
-        title: "High in protein",
-        body: `Supports your muscles and keeps you full longer. (${meal.protein}g)`,
-      });
-    }
-    if (meal.sugar <= 8) {
-      reasons.push({
-        icon: Candy,
-        title: "Lower in sugar",
-        body: `Fits your preference for less sweet meals. (${meal.sugar}g)`,
+        title: "Protein fit",
+        body: `Supports fullness with ${meal.protein}g protein.`,
       });
     }
     reasons.push({
+      icon: Candy,
+      title: "Sugar balance",
+      body: `${meal.sugar}g sugar keeps the recommendation aligned with your preference.`,
+    });
+    reasons.push({
       icon: Flame,
-      title: "Balanced calories",
-      body: `${meal.calories} kcal — a balanced load for your day.`,
+      title: "Calories match",
+      body: `${meal.calories} kcal fits your Smart Pick calorie setting.`,
     });
     reasons.push({
       icon: Leaf,
-      title: "Matches your preferences",
-      body: "Closest fit to the nutrition sliders you set.",
+      title: "Preference fit",
+      body: "Closest fit to the Energy, Protein, Sugar, and Calories controls you set.",
     });
   } else {
-    // Quick Pick: mood-focused (price, calories, prep, satiety)
+    reasons.push({
+      icon: DollarSign,
+      title: "Clear value",
+      body: `${meal.price} price keeps the choice simple and easy to justify.`,
+    });
     reasons.push({
       icon: Flame,
       title: mood === "light" ? "Fits your calorie target" : "Right calorie load",
-      body: `${meal.calories} kcal — matches a ${mood ?? "quick"} mood.`,
+      body: `${meal.calories} kcal matches a ${mood ?? "quick"} mood.`,
     });
-    if (mood === "fast" || meal.prepTime <= 12) {
-      reasons.push({
-        icon: Zap,
-        title: "Ready quickly",
-        body: `On your table in just ${meal.prepTime} minutes.`,
-      });
-    }
+    reasons.push({
+      icon: Clock,
+      title: "Prep time works",
+      body: `Ready in ${meal.prepTime} minutes.`,
+    });
     reasons.push({
       icon: Heart,
       title: meal.satiety === "High" ? "High satiety" : "Satisfying portion",
       body:
         meal.satiety === "High"
-          ? "Filling enough to keep you happy."
+          ? "Filling enough to keep you satisfied."
           : "Balanced portion that satisfies without feeling heavy.",
-    });
-    reasons.push({
-      icon: Dumbbell,
-      title: "Good price",
-      body: `${meal.price} — solid value for what you get.`,
     });
   }
 
@@ -246,7 +246,6 @@ function buildReasons(meal: Meal, mode: string | null, mood: string | null) {
 }
 
 function QRBlock() {
-  // Static placeholder QR built as SVG checker pattern — visually believable
   const size = 21;
   const cells: boolean[] = [];
   let seed = 7;
@@ -254,7 +253,6 @@ function QRBlock() {
     seed = (seed * 1103515245 + 12345) & 0x7fffffff;
     cells.push(seed % 3 !== 0);
   }
-  // force corner squares
   const corner = (r: number, c: number) =>
     (r < 7 && c < 7) || (r < 7 && c >= size - 7) || (r >= size - 7 && c < 7);
   return (
@@ -270,10 +268,7 @@ function QRBlock() {
           Array.from({ length: size }).map((__, c) => {
             const i = r * size + c;
             const on = corner(r, c)
-              ? (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)) &&
-                !(r < 7 && c >= size - 7 && (c === size - 7 || c === size - 1 || r === 0 || r === 6 || (r >= 2 && r <= 4 && c >= size - 5 && c <= size - 3)))
-                ? true
-                : false
+              ? r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)
               : cells[i];
             return on ? <rect key={i} x={c} y={r} width={1} height={1} /> : null;
           })

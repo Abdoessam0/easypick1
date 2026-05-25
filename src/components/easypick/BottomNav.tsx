@@ -18,7 +18,7 @@ export function BottomNav() {
   );
 
   const moodReady = mode === "quick" ? !!mood : mode === "smart" ? !!prefs : false;
-  const compareReady = compare.length >= 2;
+  const compareReady = compare.length === 3;
   const chooseReady = !!finalChoice;
 
   const canGo = (key: string) => {

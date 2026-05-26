@@ -211,7 +211,7 @@ function ComparePage() {
             <div
               key={mt.key}
               className="grid items-center gap-3 border-b border-border/60 py-4 last:border-0"
-              style={{ gridTemplateColumns: "repeat(3, 1fr) 140px" }}
+              style={{ gridTemplateColumns: "repeat(2, 1fr) 140px" }}
             >
               {meals.map((m) => {
                 const isBest = mt.get(m) === best && vals.filter((v) => v === best).length === 1;

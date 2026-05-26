@@ -16,7 +16,7 @@ export function BottomNav() {
   const activeIdx = steps.findIndex((s) => s.paths.some((p) => loc.pathname.startsWith(p)));
 
   const moodReady = mode === "quick" ? !!mood : mode === "smart" ? !!prefs : false;
-  const compareReady = compare.length === 3;
+  const compareReady = compare.length === 2;
   const chooseReady = !!finalChoice;
 
   const canGo = (key: string) => {

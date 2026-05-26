@@ -10,7 +10,7 @@ export const Route = createFileRoute("/results")({
   component: ResultsPage,
 });
 
-const REQUIRED_COMPARE_COUNT = 3;
+const REQUIRED_COMPARE_COUNT = 2;
 
 function ResultsPage() {
   const { mode, mood, prefs, compare, toggleCompare, removeCompare, clearCompare } = useEasypick();
@@ -29,12 +29,10 @@ function ResultsPage() {
   const canCompare = compare.length === REQUIRED_COMPARE_COUNT;
   const trayMessage =
     compare.length === 0
-      ? "Pick 3 meals to compare"
+      ? "Pick 2 meals to compare"
       : compare.length === 1
-        ? "Pick 2 more meals to compare"
-        : compare.length === 2
-          ? "Pick 1 more meal to compare"
-          : "3 meals selected";
+        ? "Pick 1 more meal to compare"
+        : "2 meals selected";
 
   return (
     <Shell>
@@ -92,13 +90,15 @@ function ResultsPage() {
               <ShoppingBasket className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <div className="font-bold leading-tight">Pick 3 meals to compare</div>
-              <div className="text-xs text-muted-foreground">{trayMessage}</div>
+              <div className="font-bold leading-tight">{trayMessage}</div>
+              <div className="text-xs text-muted-foreground">
+                {canCompare ? "Ready to compare" : "Tap Add to compare on any meal"}
+              </div>
             </div>
           </div>
 
-          <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-3">
-            {[0, 1, 2].map((i) => {
+          <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-2">
+            {[0, 1].map((i) => {
               const id = compare[i];
               const meal = id ? getMealById(id) : null;
               return (

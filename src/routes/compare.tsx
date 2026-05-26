@@ -22,32 +22,32 @@ export const Route = createFileRoute("/compare")({
   component: ComparePage,
 });
 
-const REQUIRED_COMPARE_COUNT = 3;
+const REQUIRED_COMPARE_COUNT = 2;
 
 function ComparePage() {
   const { compare, mode, mood, prefs, setFinalChoice } = useEasypick();
+  void REQUIRED_COMPARE_COUNT;
   const nav = useNavigate();
 
   const meals = compare.map((id) => getMealById(id)).filter((m): m is Meal => !!m);
-  const hasExactlyThreeMeals =
-    compare.length === REQUIRED_COMPARE_COUNT && meals.length === REQUIRED_COMPARE_COUNT;
+  const hasExactlyTwoMeals = compare.length === 2 && meals.length === 2;
 
   useEffect(() => {
-    if (mode && !hasExactlyThreeMeals) {
+    if (mode && !hasExactlyTwoMeals) {
       const timer = window.setTimeout(() => nav({ to: "/results" }), 1400);
       return () => window.clearTimeout(timer);
     }
-  }, [hasExactlyThreeMeals, mode, nav]);
+  }, [hasExactlyTwoMeals, mode, nav]);
 
   if (!mode) return <Navigate to="/mode" />;
 
-  if (!hasExactlyThreeMeals) {
+  if (!hasExactlyTwoMeals) {
     return (
       <Shell>
         <div className="glass mx-auto mt-16 max-w-lg rounded-[2rem] p-8 text-center shadow-soft">
-          <h1 className="text-3xl font-extrabold text-gradient-primary">Pick 3 meals to compare</h1>
+          <h1 className="text-3xl font-extrabold text-gradient-primary">Pick 2 meals to compare</h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Compare works with exactly 3 selected meals. We'll send you back to Results so you can
+            Compare works with exactly 2 selected meals. We'll send you back to Results so you can
             finish your selection.
           </p>
           <button
@@ -190,14 +190,14 @@ function ComparePage() {
 
       <div className="mx-auto max-w-4xl text-center">
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
-          Compare your <span className="text-gradient-primary">top 3 picks</span>
+          Compare your <span className="text-gradient-primary">top 2 picks</span>
         </h1>
         <p className="mt-3 text-base text-muted-foreground md:text-lg">
           Three meals, side by side. Our suggestion is highlighted below.
         </p>
       </div>
 
-      <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
         {meals.map((m, i) => (
           <MealHero key={m.id} meal={m} index={i + 1} winner={m.id === winnerMeal.id} />
         ))}
@@ -211,7 +211,7 @@ function ComparePage() {
             <div
               key={mt.key}
               className="grid items-center gap-3 border-b border-border/60 py-4 last:border-0"
-              style={{ gridTemplateColumns: "repeat(3, 1fr) 140px" }}
+              style={{ gridTemplateColumns: "repeat(2, 1fr) 140px" }}
             >
               {meals.map((m) => {
                 const isBest = mt.get(m) === best && vals.filter((v) => v === best).length === 1;

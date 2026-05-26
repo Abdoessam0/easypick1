@@ -14,7 +14,7 @@ import { EasypickProvider } from "@/lib/easypick-context";
 const brandTitle = "Easypick - Smart restaurant table";
 const brandDescription =
   "Easypick is a smart restaurant decision-support experience that helps diners choose meals faster with Quick Pick moods and Smart Pick nutrition preferences.";
-const brandImage = "/easypick-logo.svg";
+const brandImage = "/easypick-og.png";
 
 function NotFoundComponent() {
   return (
@@ -83,7 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "icon", type: "image/svg+xml", href: "/easypick-logo.svg" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
       {
         rel: "preconnect",
         href: "https://fonts.googleapis.com",

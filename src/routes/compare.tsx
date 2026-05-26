@@ -22,32 +22,32 @@ export const Route = createFileRoute("/compare")({
   component: ComparePage,
 });
 
-const REQUIRED_COMPARE_COUNT = 3;
+const REQUIRED_COMPARE_COUNT = 2;
 
 function ComparePage() {
   const { compare, mode, mood, prefs, setFinalChoice } = useEasypick();
+  void REQUIRED_COMPARE_COUNT;
   const nav = useNavigate();
 
   const meals = compare.map((id) => getMealById(id)).filter((m): m is Meal => !!m);
-  const hasExactlyThreeMeals =
-    compare.length === REQUIRED_COMPARE_COUNT && meals.length === REQUIRED_COMPARE_COUNT;
+  const hasExactlyTwoMeals = compare.length === 2 && meals.length === 2;
 
   useEffect(() => {
-    if (mode && !hasExactlyThreeMeals) {
+    if (mode && !hasExactlyTwoMeals) {
       const timer = window.setTimeout(() => nav({ to: "/results" }), 1400);
       return () => window.clearTimeout(timer);
     }
-  }, [hasExactlyThreeMeals, mode, nav]);
+  }, [hasExactlyTwoMeals, mode, nav]);
 
   if (!mode) return <Navigate to="/mode" />;
 
-  if (!hasExactlyThreeMeals) {
+  if (!hasExactlyTwoMeals) {
     return (
       <Shell>
         <div className="glass mx-auto mt-16 max-w-lg rounded-[2rem] p-8 text-center shadow-soft">
-          <h1 className="text-3xl font-extrabold text-gradient-primary">Pick 3 meals to compare</h1>
+          <h1 className="text-3xl font-extrabold text-gradient-primary">Pick 2 meals to compare</h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Compare works with exactly 3 selected meals. We'll send you back to Results so you can
+            Compare works with exactly 2 selected meals. We'll send you back to Results so you can
             finish your selection.
           </p>
           <button

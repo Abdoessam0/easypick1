@@ -28,7 +28,7 @@ type EasypickCtx = EasypickState & {
 
 const defaultPrefs: Prefs = { energy: 1, protein: 1, sugar: 1, calories: 1 };
 
-const MAX_COMPARE = 3;
+const MAX_COMPARE = 2;
 
 const Ctx = createContext<EasypickCtx | null>(null);
 

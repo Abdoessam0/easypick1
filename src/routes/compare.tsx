@@ -190,14 +190,14 @@ function ComparePage() {
 
       <div className="mx-auto max-w-4xl text-center">
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
-          Compare your <span className="text-gradient-primary">top 3 picks</span>
+          Compare your <span className="text-gradient-primary">top 2 picks</span>
         </h1>
         <p className="mt-3 text-base text-muted-foreground md:text-lg">
           Three meals, side by side. Our suggestion is highlighted below.
         </p>
       </div>
 
-      <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
         {meals.map((m, i) => (
           <MealHero key={m.id} meal={m} index={i + 1} winner={m.id === winnerMeal.id} />
         ))}

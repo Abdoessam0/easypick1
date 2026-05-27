@@ -1,38 +1,45 @@
 import { Link, useLocation } from "wouter";
 import { Shell } from "@/components/easypick/Shell";
-import { PageTitle } from "@/components/easypick/PageTitle";
 import { useEasypick } from "@/lib/easypick-context";
 import burger from "@/assets/meal-burger.jpg";
 import salmon from "@/assets/meal-salmon.jpg";
 import soup from "@/assets/meal-soup.jpg";
-import { ChevronRight, ChevronLeft, Check, Sparkles } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import type { Mood } from "@/lib/meals";
 
 const moods: {
   key: Mood;
   label: string;
+  color: string;
+  textColor: string;
   desc: string;
   summary: string;
   img: string;
 }[] = [
   {
     key: "hungry",
-    label: "Hungry",
-    desc: "Filling meals with higher satiety",
+    label: "HUNGRY",
+    color: "bg-red-50",
+    textColor: "text-primary",
+    desc: "Filling & satisfying meals",
     summary: "We'll prioritize satiety and filling portions.",
     img: burger,
   },
   {
     key: "light",
-    label: "Light",
-    desc: "Fresh meals with lower calories",
+    label: "LIGHT",
+    color: "bg-emerald-50",
+    textColor: "text-emerald-600",
+    desc: "Fresh & balanced choices",
     summary: "We'll prioritize lower calories and balanced nutrition.",
     img: salmon,
   },
   {
     key: "fast",
-    label: "Fast",
-    desc: "Ready in 15 minutes or less",
+    label: "FAST",
+    color: "bg-orange-50",
+    textColor: "text-orange-500",
+    desc: "Ready in minutes",
     summary: "We'll prioritize the fastest prep times.",
     img: soup,
   },
@@ -41,24 +48,27 @@ const moods: {
 export default function QuickPage() {
   const { mood, setMood, setMode } = useEasypick();
   const [, navigate] = useLocation();
-  const selected = moods.find((m) => m.key === mood);
 
   return (
     <Shell>
       <Link
         to="/mode"
-        className="glass mb-6 inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-primary"
+        className="mb-8 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white/70 backdrop-blur border border-white/80 px-5 py-2 text-sm font-semibold text-foreground/70 shadow-soft hover:text-primary transition"
       >
         <ChevronLeft className="h-4 w-4" /> Back
       </Link>
 
-      <PageTitle
-        title="What are you"
-        accent="craving today?"
-        subtitle="Choose a mood and we'll narrow the options for you."
-      />
+      <div className="mx-auto max-w-4xl text-center mb-10">
+        <h1 className="text-5xl font-extrabold leading-tight tracking-tight md:text-[3.5rem]">
+          What are you{" "}
+          <span className="text-gradient-primary">craving today?</span>
+        </h1>
+        <p className="mt-4 text-lg text-muted-foreground max-w-sm mx-auto">
+          Choose a mood and we'll narrow the options for you.
+        </p>
+      </div>
 
-      <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-3 mb-10">
         {moods.map((m) => {
           const active = mood === m.key;
           return (
@@ -68,16 +78,14 @@ export default function QuickPage() {
                 setMode("quick");
                 setMood(m.key);
               }}
-              className={`glass relative flex flex-col items-center gap-4 rounded-[2rem] p-6 text-center transition hover:-translate-y-1 hover:shadow-glow ${
-                active ? "ring-2 ring-primary shadow-glow border-primary/50" : ""
+              className={`card-premium relative flex flex-col items-center gap-4 p-6 text-center transition-all duration-200 ${
+                active ? "ring-2 ring-primary shadow-glow" : ""
               }`}
             >
-              {active && (
-                <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-glow">
-                  <Check className="h-4 w-4" />
-                </div>
-              )}
-              <div className="aspect-square w-full overflow-hidden rounded-3xl bg-primary-soft/40">
+              <div
+                className={`w-full overflow-hidden rounded-2xl ${m.color}`}
+                style={{ aspectRatio: "4/3" }}
+              >
                 <img
                   src={m.img}
                   alt={m.label}
@@ -85,38 +93,39 @@ export default function QuickPage() {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="text-2xl font-extrabold tracking-tight text-foreground">
+
+              <div className={`text-2xl font-extrabold tracking-widest ${m.textColor}`}>
                 {m.label}
               </div>
-              <div className="text-sm text-muted-foreground">{m.desc}</div>
+              <div className="text-sm text-muted-foreground leading-snug">{m.desc}</div>
+
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition ${
+                  active
+                    ? "border-primary bg-primary text-white"
+                    : "border-border text-muted-foreground"
+                }`}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </div>
             </button>
           );
         })}
       </div>
 
-      {selected && (
-        <div className="glass mx-auto mt-8 flex max-w-3xl items-center gap-3 rounded-2xl p-4 text-sm shadow-soft">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft">
-            <Sparkles className="h-4 w-4 text-primary" />
-          </div>
-          <div>
-            <div className="font-bold">
-              You selected: <span className="text-primary">{selected.label}</span>
-            </div>
-            <div className="text-muted-foreground">{selected.summary}</div>
-          </div>
-        </div>
-      )}
-
-      <div className="mt-8 flex flex-col items-center gap-3">
+      <div className="mx-auto max-w-5xl flex flex-col items-center gap-4">
         <button
           disabled={!mood}
           onClick={() => navigate("/results")}
-          className="inline-flex min-h-[56px] items-center gap-3 rounded-full bg-primary px-10 py-4 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+          className="inline-flex min-h-[56px] items-center gap-3 rounded-full bg-primary px-12 py-4 text-[15px] font-bold text-primary-foreground shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.98]"
         >
-          Show best matches <ChevronRight className="h-5 w-5" />
+          SHOW BEST MATCHES <ChevronRight className="h-5 w-5" />
         </button>
-        {!mood && <div className="text-sm text-muted-foreground">Pick a mood to continue.</div>}
+        {!mood && (
+          <p className="text-sm text-muted-foreground">
+            Pick a mood to continue.
+          </p>
+        )}
       </div>
     </Shell>
   );

@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { Brain, Zap, RefreshCw, Repeat } from "lucide-react";
+import { Brain, Zap, RefreshCw, ArrowLeftRight } from "lucide-react";
 import { useEasypick } from "@/lib/easypick-context";
 
 export function ModeStatusBar() {
@@ -13,15 +13,13 @@ export function ModeStatusBar() {
   const label = isSmart ? "Smart Pick" : "Quick Pick";
 
   return (
-    <div className="glass mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 rounded-full px-4 py-2 shadow-soft">
-      <div className="flex items-center gap-3 px-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-soft">
-          <Icon className="h-4 w-4 text-primary" />
+    <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/80 px-5 py-2.5 shadow-soft">
+      <div className="flex items-center gap-2.5">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft">
+          <Icon className="h-3.5 w-3.5 text-primary" />
         </div>
         <div className="leading-tight">
-          <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Current mode
-          </div>
+          <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Current mode</div>
           <div className="text-sm font-bold text-foreground">{label}</div>
         </div>
       </div>
@@ -32,9 +30,9 @@ export function ModeStatusBar() {
             changeMode();
             navigate("/mode");
           }}
-          className="flex min-h-[40px] items-center gap-2 rounded-full bg-card px-4 py-2 text-sm font-semibold text-foreground shadow-soft transition hover:bg-primary-soft"
+          className="flex min-h-[36px] items-center gap-1.5 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-semibold text-foreground/80 shadow-soft transition hover:border-primary/30 hover:bg-primary-soft hover:text-primary"
         >
-          <Repeat className="h-4 w-4" />
+          <ArrowLeftRight className="h-3.5 w-3.5" />
           Change mode
         </button>
         <button
@@ -42,10 +40,10 @@ export function ModeStatusBar() {
             restartSelection();
             navigate(isSmart ? "/smart" : "/quick");
           }}
-          className="flex min-h-[40px] items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-glow transition hover:brightness-110"
+          className="flex min-h-[36px] items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-primary-foreground shadow-glow transition hover:brightness-110"
         >
-          <RefreshCw className="h-4 w-4" />
-          Restart selection
+          <RefreshCw className="h-3.5 w-3.5" />
+          Restart
         </button>
       </div>
     </div>

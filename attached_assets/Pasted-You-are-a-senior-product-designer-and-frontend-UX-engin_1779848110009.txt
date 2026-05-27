@@ -1,0 +1,373 @@
+You are a senior product designer and frontend UX engineer working on the Easypick project.
+
+Your task is NOT just to tweak the UI.
+
+You must redesign and improve the entire user experience to make the platform feel:
+
+- modern
+- premium
+- warm
+- minimal
+- touch-friendly
+- visually polished
+- emotionally calming
+- easier to understand
+- faster to use
+- more consistent
+
+I will provide reference designs, screenshots, UI inspirations, and visual examples.
+
+Your job is to carefully analyze those references and redesign the Easypick interface so it visually matches their quality, style, spacing, polish, and user experience.
+
+The goal is for Easypick to feel like a premium modern restaurant decision-support platform.
+
+The redesign should feel closer to:
+- Apple-level clarity
+- modern food-tech startups
+- premium tablet UX
+- soft hospitality design
+- elegant touchscreen interfaces
+
+This is NOT a generic food ordering app.
+
+It is a smart decision-reduction experience.
+
+The design must help users choose meals faster and with less stress.
+
+IMPORTANT:
+Do not copy designs blindly.
+Adapt them into the Easypick product and workflow.
+
+1. Overall Design Direction
+
+The entire experience should feel:
+
+- soft
+- modern
+- premium
+- warm
+- futuristic but human
+- clean and spacious
+- easy to understand instantly
+
+Avoid:
+- clutter
+- crowded cards
+- tiny text
+- confusing controls
+- harsh dark colors
+- generic dashboard styling
+- developer-looking UI
+- inconsistent spacing
+- weak visual hierarchy
+
+2. Visual Style
+
+Use a warm modern palette.
+
+Primary brand red:
+#C21318
+
+Background:
+- warm off-white
+- soft beige
+- light blush tones
+- subtle gradients
+
+Use:
+- soft shadows
+- glassy depth when appropriate
+- rounded corners
+- elegant spacing
+- smooth hierarchy
+- modern typography
+- clean iconography
+
+The app should feel premium on:
+- iPad/table mode
+- mobile
+- desktop
+- rotated/table landscape mode
+
+3. User Experience Improvements
+
+Improve the entire UX flow.
+
+The user should always know:
+- where they are
+- what they selected
+- what happens next
+- what button to press
+
+Reduce confusion everywhere.
+
+Simplify interactions.
+
+Improve:
+- navigation
+- spacing
+- CTA visibility
+- compare flow
+- mode selection
+- readability
+- selection feedback
+- empty states
+- transitions
+- button hierarchy
+- card consistency
+
+4. Reference Design Matching
+
+I will provide:
+- screenshots
+- UI references
+- inspiration designs
+- visual examples
+- layout examples
+
+You must:
+- analyze them carefully
+- identify the design patterns
+- adapt the same quality/style into Easypick
+
+Match:
+- spacing
+- typography scale
+- component polish
+- visual hierarchy
+- card design
+- CTA style
+- icon treatment
+- color balance
+- layout rhythm
+- image presentation
+
+Do not create a random redesign unrelated to the references.
+
+5. Required Product Structure
+
+Keep the core product logic.
+
+Quick Pick:
+- Light
+- Hungry
+- Fast
+
+Smart Pick:
+- Energy
+- Protein
+- Sugar
+- Calories
+
+Compare:
+- compare exactly 2 meals
+
+Do not change this logic.
+
+6. Meal Cards
+
+Meal cards should feel premium and modern.
+
+Improve:
+- food image quality
+- image cropping
+- spacing
+- readability
+- nutrition tags
+- button hierarchy
+- selected state
+- hover/touch states
+
+Meal cards should clearly show:
+- image
+- name
+- short description
+- match %
+- calories
+- prep time
+- price
+- satiety
+- tags
+
+Use elegant modern layouts.
+
+7. Compare Experience
+
+The compare page should feel highly polished.
+
+Two meals should appear:
+- balanced
+- easy to compare
+- visually separated
+- easy to scan
+
+Comparison metrics should feel:
+- visual
+- clean
+- readable
+- premium
+
+The suggestion section must feel:
+- important
+- trustworthy
+- easy to understand
+
+The recommended meal should stand out visually.
+
+8. Typography
+
+Improve typography system completely.
+
+Use:
+- better hierarchy
+- cleaner weights
+- consistent sizes
+- stronger readability
+- better line spacing
+
+Avoid:
+- tiny labels
+- crowded text
+- inconsistent sizes
+- weak hierarchy
+
+Typography should feel modern and premium.
+
+9. Touch-Friendly UX
+
+This app is designed for touchscreen/table usage.
+
+Everything must feel easy to tap.
+
+Requirements:
+- large touch targets
+- comfortable spacing
+- clear selected states
+- obvious interactions
+- smooth flow
+
+Buttons should feel satisfying to press.
+
+10. Animations and Interactions
+
+Improve animations carefully.
+
+Use:
+- soft transitions
+- smooth hover/tap feedback
+- elegant state changes
+- premium motion
+
+Avoid:
+- excessive animation
+- distracting movement
+- laggy effects
+
+Motion should support usability.
+
+11. Navigation and State Visibility
+
+Users should always understand:
+- current mode
+- selected meals
+- current step
+- compare status
+
+Improve:
+- bottom navigation
+- mode status bar
+- selection tray
+- progress visibility
+
+The app should feel guided and intuitive.
+
+12. Logo and Branding
+
+I will provide a new logo.
+
+Replace the current logo everywhere:
+- navbar
+- favicon
+- loading state
+- app branding
+- OG image if applicable
+
+The new branding must integrate naturally into the redesigned UI.
+
+13. Technical Requirements
+
+Keep the project structure clean.
+
+Do not break:
+- SSR
+- routing
+- compare logic
+- state management
+- responsiveness
+
+Preserve:
+- Rotate View
+- Restart selection
+- Change mode
+- ModeStatusBar
+
+Improve them visually if needed.
+
+14. Performance
+
+Optimize the experience.
+
+Improve:
+- image loading
+- spacing consistency
+- responsiveness
+- layout stability
+- mobile performance
+
+Remove unused UI/code/assets if safe.
+
+15. Final Goal
+
+The final result should feel like:
+- a real premium product
+- investor/demo ready
+- modern startup quality
+- polished enough for restaurants and tablets
+- visually memorable
+- easier and faster to use than before
+
+The redesign should immediately feel:
+“cleaner, smarter, more premium, and more user-friendly”
+
+16. Required Deliverables
+
+- redesigned UI
+- improved UX
+- improved responsiveness
+- polished compare experience
+- refined meal cards
+- improved visual hierarchy
+- integrated new logo
+- better spacing and typography
+- modern premium design consistency
+
+17. Git + Deployment
+
+After finishing:
+- test the app
+- fix errors
+- run build
+- push changes to GitHub
+
+Repository:
+https://github.com/Abdoessam0/easypick
+
+Run:
+npm install
+npm run build
+
+If available:
+npm run lint
+
+Commit message:
+Redesign Easypick UX and improve premium tablet experience

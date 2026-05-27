@@ -2,46 +2,46 @@ import { Link, useLocation } from "wouter";
 import { Shell } from "@/components/easypick/Shell";
 import { useEasypick } from "@/lib/easypick-context";
 import burger from "@/assets/meal-burger.jpg";
-import salmon from "@/assets/meal-salmon.jpg";
-import soup from "@/assets/meal-soup.jpg";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import moodLight from "@/assets/mood-light.png";
+import moodFast from "@/assets/mood-fast.png";
+import { ChevronRight, ChevronLeft, Star } from "lucide-react";
 import type { Mood } from "@/lib/meals";
 
 const moods: {
   key: Mood;
   label: string;
-  color: string;
-  textColor: string;
+  labelColor: string;
   desc: string;
-  summary: string;
   img: string;
+  imgBg: string;
+  imgClass: string;
 }[] = [
   {
     key: "hungry",
     label: "HUNGRY",
-    color: "bg-red-50",
-    textColor: "text-primary",
+    labelColor: "text-primary",
     desc: "Filling & satisfying meals",
-    summary: "We'll prioritize satiety and filling portions.",
     img: burger,
+    imgBg: "bg-[oklch(0.97_0.015_30)]",
+    imgClass: "object-cover",
   },
   {
     key: "light",
     label: "LIGHT",
-    color: "bg-emerald-50",
-    textColor: "text-emerald-600",
+    labelColor: "text-emerald-600",
     desc: "Fresh & balanced choices",
-    summary: "We'll prioritize lower calories and balanced nutrition.",
-    img: salmon,
+    img: moodLight,
+    imgBg: "bg-[oklch(0.97_0.04_145)]",
+    imgClass: "object-contain p-2",
   },
   {
     key: "fast",
     label: "FAST",
-    color: "bg-orange-50",
-    textColor: "text-orange-500",
+    labelColor: "text-orange-500",
     desc: "Ready in minutes",
-    summary: "We'll prioritize the fastest prep times.",
-    img: soup,
+    img: moodFast,
+    imgBg: "bg-[oklch(0.97_0.015_30)]",
+    imgClass: "object-contain p-2",
   },
 ];
 
@@ -78,29 +78,35 @@ export default function QuickPage() {
                 setMode("quick");
                 setMood(m.key);
               }}
-              className={`card-premium relative flex flex-col items-center gap-4 p-6 text-center transition-all duration-200 ${
+              className={`card-premium relative flex flex-col items-center gap-5 p-6 text-center transition-all duration-200 ${
                 active ? "ring-2 ring-primary shadow-glow" : ""
               }`}
             >
+              {active && (
+                <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white">
+                  <Star className="h-3.5 w-3.5 fill-current" />
+                </div>
+              )}
+
               <div
-                className={`w-full overflow-hidden rounded-2xl ${m.color}`}
+                className={`w-full overflow-hidden rounded-2xl ${m.imgBg}`}
                 style={{ aspectRatio: "4/3" }}
               >
                 <img
                   src={m.img}
                   alt={m.label}
                   loading="lazy"
-                  className="h-full w-full object-cover"
+                  className={`h-full w-full ${m.imgClass}`}
                 />
               </div>
 
-              <div className={`text-2xl font-extrabold tracking-widest ${m.textColor}`}>
+              <div className={`text-2xl font-extrabold tracking-widest ${m.labelColor}`}>
                 {m.label}
               </div>
-              <div className="text-sm text-muted-foreground leading-snug">{m.desc}</div>
+              <div className="text-sm text-muted-foreground leading-snug -mt-2">{m.desc}</div>
 
               <div
-                className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition ${
+                className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition ${
                   active
                     ? "border-primary bg-primary text-white"
                     : "border-border text-muted-foreground"
@@ -117,15 +123,14 @@ export default function QuickPage() {
         <button
           disabled={!mood}
           onClick={() => navigate("/results")}
-          className="inline-flex min-h-[56px] items-center gap-3 rounded-full bg-primary px-12 py-4 text-[15px] font-bold text-primary-foreground shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.98]"
+          className="inline-flex min-h-[56px] items-center gap-3 rounded-full bg-primary px-14 py-4 text-[15px] font-bold text-primary-foreground shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 active:scale-[0.98]"
         >
           SHOW BEST MATCHES <ChevronRight className="h-5 w-5" />
         </button>
-        {!mood && (
-          <p className="text-sm text-muted-foreground">
-            Pick a mood to continue.
-          </p>
-        )}
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Star className="h-3.5 w-3.5 text-warning" />
+          2 options will be recommended for you.
+        </p>
       </div>
     </Shell>
   );

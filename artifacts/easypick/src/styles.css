@@ -179,4 +179,65 @@
     background: var(--success);
     transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
   }
+
+  /* Smart Pick sliders */
+  .smart-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    position: relative;
+  }
+
+  .smart-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: oklch(0.91 0.012 30);
+  }
+
+  .smart-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: oklch(0.91 0.012 30);
+  }
+
+  .smart-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    margin-top: -9px;
+    box-shadow: 0 2px 8px -2px color-mix(in oklab, var(--primary) 50%, transparent);
+    border: 3px solid white;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .smart-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px -2px color-mix(in oklab, var(--primary) 50%, transparent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .smart-slider:hover::-webkit-slider-thumb,
+  .smart-slider:focus::-webkit-slider-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 4px 16px -4px color-mix(in oklab, var(--primary) 60%, transparent);
+  }
+
+  .smart-slider:hover::-moz-range-thumb,
+  .smart-slider:focus::-moz-range-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 4px 16px -4px color-mix(in oklab, var(--primary) 60%, transparent);
+  }
 }

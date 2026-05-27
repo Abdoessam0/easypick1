@@ -3,47 +3,49 @@ import { Shell } from "@/components/easypick/Shell";
 import { useEasypick } from "@/lib/easypick-context";
 import type { LevelTriple, Prefs } from "@/lib/meals";
 import chickenBowl from "@/assets/meal-chicken-bowl.jpg";
-import { Dumbbell, Flame, Candy, ChevronRight, ChevronLeft, Zap, Heart, Sparkles } from "lucide-react";
+import shrimp from "@/assets/meal-shrimp.jpg";
+import soup from "@/assets/meal-soup.jpg";
+import { Dumbbell, Flame, Candy, ChevronRight, ChevronLeft, Zap, Heart, Leaf } from "lucide-react";
 
 const controls: {
   key: keyof Prefs;
   icon: React.ElementType;
+  iconBg: string;
   title: string;
   q: string;
   labels: [string, string, string];
-  color: string;
 }[] = [
   {
     key: "protein",
     icon: Dumbbell,
+    iconBg: "bg-[oklch(0.95_0.03_240)]",
     title: "Protein",
     q: "How much protein do you want?",
     labels: ["Balanced", "Normal", "High Protein"],
-    color: "bg-blue-50 text-blue-600",
   },
   {
     key: "calories",
     icon: Flame,
+    iconBg: "bg-[oklch(0.96_0.04_30)]",
     title: "Calories",
     q: "What kind of meal fits your day?",
     labels: ["Light", "Normal", "Filling"],
-    color: "bg-orange-50 text-orange-500",
   },
   {
     key: "sugar",
     icon: Candy,
+    iconBg: "bg-[oklch(0.96_0.03_340)]",
     title: "Sugar",
     q: "How sweet would you like it?",
     labels: ["Less Sweet", "Normal", "Sweet OK"],
-    color: "bg-pink-50 text-pink-500",
   },
   {
     key: "energy",
     icon: Zap,
+    iconBg: "bg-[oklch(0.96_0.04_80)]",
     title: "Energy",
     q: "How much energy do you need?",
     labels: ["Light", "Normal", "Boost"],
-    color: "bg-yellow-50 text-yellow-600",
   },
 ];
 
@@ -56,6 +58,8 @@ export default function SmartPage() {
     setPrefs({ ...prefs, [k]: v });
   };
 
+  const previewMeals = [chickenBowl, shrimp, soup];
+
   return (
     <Shell>
       <Link
@@ -65,12 +69,14 @@ export default function SmartPage() {
         <ChevronLeft className="h-4 w-4" /> Back
       </Link>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 lg:grid-cols-[320px_1fr]">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 lg:grid-cols-[300px_1fr]">
+        {/* Left panel */}
         <div className="card-premium flex flex-col gap-5 p-7">
           <div>
             <h2 className="text-2xl font-extrabold leading-tight tracking-tight">
               Let's make it{" "}
               <span className="text-gradient-primary">just right for you</span>
+              <span className="ml-1 text-primary">✦</span>
             </h2>
             <p className="mt-3 text-[14px] text-muted-foreground leading-relaxed">
               Move the sliders to set your preferences. We'll handle the rest!
@@ -94,16 +100,17 @@ export default function SmartPage() {
           </div>
         </div>
 
+        {/* Right sliders panel */}
         <div className="card-premium overflow-hidden">
           <div className="flex flex-col divide-y divide-border">
             {controls.map((s) => {
               const Icon = s.icon;
               const val = prefs[s.key];
               return (
-                <div key={s.key} className="flex flex-col gap-4 p-6">
+                <div key={s.key} className="flex flex-col gap-5 p-6">
                   <div className="flex items-center gap-3">
-                    <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${s.color}`}>
-                      <Icon className="h-5 w-5" />
+                    <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${s.iconBg}`}>
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
                     <div>
                       <div className="text-[16px] font-bold">{s.title}</div>
@@ -111,24 +118,29 @@ export default function SmartPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {[0, 1, 2].map((i) => {
-                      const active = val === i;
-                      return (
-                        <button
-                          key={i}
-                          onClick={() => setLevel(s.key, i as LevelTriple)}
-                          className={`min-h-[52px] rounded-2xl px-3 py-3 text-[13px] font-bold transition-all duration-150 ${
-                            active
-                              ? "bg-primary text-primary-foreground shadow-glow scale-[1.02]"
-                              : "bg-[oklch(0.97_0.015_30)] text-foreground/70 hover:bg-primary-soft hover:text-primary"
-                          }`}
-                        >
-                          {i === 0 && <span className="mr-1 text-emerald-500">●</span>}
-                          {s.labels[i]}
-                        </button>
-                      );
-                    })}
+                  <div className="flex flex-col gap-2">
+                    <div className="relative px-1">
+                      <input
+                        type="range"
+                        min={0}
+                        max={2}
+                        step={1}
+                        value={val}
+                        onChange={(e) => {
+                          setMode("smart");
+                          setLevel(s.key, Number(e.target.value) as LevelTriple);
+                        }}
+                        className="smart-slider w-full"
+                      />
+                    </div>
+                    <div className="grid grid-cols-3 text-[12px] font-semibold text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Leaf className="h-3 w-3 text-emerald-500" />
+                        <span className={val === 0 ? "text-primary font-bold" : ""}>{s.labels[0]}</span>
+                      </div>
+                      <div className={`text-center ${val === 1 ? "text-primary font-bold" : ""}`}>{s.labels[1]}</div>
+                      <div className={`text-right ${val === 2 ? "text-primary font-bold" : ""}`}>{s.labels[2]}</div>
+                    </div>
                   </div>
                 </div>
               );
@@ -137,22 +149,43 @@ export default function SmartPage() {
         </div>
       </div>
 
-      <div className="mx-auto mt-8 max-w-6xl">
-        <div className="card-premium flex flex-col items-center gap-5 p-6 sm:flex-row sm:justify-between">
-          <div className="flex items-center gap-3">
-            <Sparkles className="h-5 w-5 text-primary" />
+      {/* Bottom bar */}
+      <div className="mx-auto mt-5 max-w-6xl">
+        <div className="card-premium flex flex-col items-center gap-5 p-5 sm:flex-row sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary-soft">
+              <span className="text-lg">✦</span>
+            </div>
             <div>
-              <div className="font-bold text-sm">We'll find meals that match your vibe!</div>
-              <div className="text-[13px] text-muted-foreground">3 tasty matches are ready for you</div>
+              <div className="font-bold text-sm">
+                We'll find meals that{" "}
+                <span className="text-gradient-primary">match your vibe!</span>
+              </div>
+              <div className="flex items-center gap-1 text-[13px] text-muted-foreground">
+                <span className="text-[oklch(0.60_0.14_145)] font-semibold">3 tasty matches are ready for you</span>
+                <span className="text-[oklch(0.60_0.14_145)]">✓</span>
+              </div>
             </div>
           </div>
 
-          <button
-            onClick={() => navigate("/results")}
-            className="inline-flex min-h-[52px] items-center gap-3 rounded-full bg-primary px-10 py-3 text-[15px] font-bold text-primary-foreground shadow-glow transition hover:brightness-110 active:scale-[0.98]"
-          >
-            Show My Matches <ChevronRight className="h-5 w-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            <div className="flex -space-x-3">
+              {previewMeals.map((img, i) => (
+                <div
+                  key={i}
+                  className="h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-sm"
+                >
+                  <img src={img} alt="" className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => navigate("/results")}
+              className="inline-flex min-h-[52px] items-center gap-3 rounded-full bg-primary px-9 py-3 text-[15px] font-bold text-primary-foreground shadow-glow transition hover:brightness-110 active:scale-[0.98]"
+            >
+              Show My Matches <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
     </Shell>

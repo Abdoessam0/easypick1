@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Easypick"
+version = "1.0.0"
+id = "artifacts/easypick"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18912
+
+[services.development]
+run = "pnpm --filter @workspace/easypick run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/easypick", "run", "build" ]
+publicDir = "artifacts/easypick/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18912"
+BASE_PATH = "/"

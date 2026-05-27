@@ -1,0 +1,168 @@
+Deployment
+
+grey-crocodile-166267.hostingersite.com
+
+Settings and redeploy
+
+All deployments
+Deployment build failed
+
+Please resolve the issues and redeploy.
+
+
+View analysis
+State:
+
+Build failed
+
+Repository:
+
+easypick
+
+Author:
+
+Author:
+salmaaashraf10
+
+Deployed:
+
+2026-05-27 07:03
+
+•
+
+8s
+
+Branch:
+
+main
+
+Commit:
+
+f647cc6e - Update website preview image for better visual appeal Update the main preview image file used for sharing the website on social media platforms. Replit-Commit-Author: Agent Replit-Commit-Session-Id: dfffa54f-58c3-49bb-bdef-8c84dafff027 Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: 13d84196-f489-42bc-a101-6c615188015f Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/33aa48c8-ea40-474e-9d20-dc0b2bd17340/dfffa54f-58c3-49bb-bdef-8c84dafff027/R7fbe6C Replit-Helium-Checkpoint-Created: true
+
+Root directory:
+
+./
+
+Framework:
+
+Other
+
+Build and output settings:
+
+Custom
+
+Node version:
+
+24.x
+
+Build logs
+Lines: 27
+
+Search logs
+
+
+
+1
+
+npm warn Unknown project config "auto-install-peers". This will stop working in the next major version of npm.
+
+2
+
+npm warn Unknown project config "strict-peer-dependencies". This will stop working in the next major version of npm.
+
+3
+
+
+4
+
+> workspace@0.0.0 preinstall
+
+5
+
+> sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+
+6
+
+
+7
+
+Use pnpm instead
+
+8
+
+npm error code 1
+
+9
+
+npm error path /home/u518287395/domains/grey-crocodile-166267.hostingersite.com/public_html/.builds/source/repository
+
+10
+
+npm error command failed
+
+11
+
+npm error command sh -c sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+
+12
+
+npm error A complete log of this run can be found in: /home/u518287395/.npm/_logs/2026-05-27T04_03_02_682Z-debug-0.log
+
+13
+
+ERROR: Failed to install dependencies
+
+14
+
+NOTICE: Attempting to install with legacy peer dependencies enabled
+
+15
+
+npm warn Unknown project config "auto-install-peers". This will stop working in the next major version of npm.
+
+16
+
+npm warn Unknown project config "strict-peer-dependencies". This will stop working in the next major version of npm.
+
+17
+
+
+18
+
+> workspace@0.0.0 preinstall
+
+19
+
+> sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+
+20
+
+
+21
+
+Use pnpm instead
+
+22
+
+npm error code 1
+
+23
+
+npm error path /home/u518287395/domains/grey-crocodile-166267.hostingersite.com/public_html/.builds/source/repository
+
+24
+
+npm error command failed
+
+25
+
+npm error command sh -c sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+
+26
+
+npm error A complete log of this run can be found in: /home/u518287395/.npm/_logs/2026-05-27T04_03_04_719Z-debug-0.log
+
+27
+
+ERROR: Failed to install dependencies

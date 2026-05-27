@@ -1,0 +1,90 @@
+Fix the Hostinger deployment failure in this repository:
+
+https://github.com/Abdoessam0/easypick
+
+Current deployment error:
+
+Hostinger build fails during dependency installation.
+
+Logs show:
+
+Use pnpm instead
+[ELIFECYCLE] Command failed with exit code 1
+ERROR: Failed to install dependencies
+
+The project is configured to use pnpm, but the current preinstall script checks npm_config_user_agent and exits if it does not detect pnpm.
+
+Hostinger appears to run pnpm but does not expose npm_config_user_agent in the expected format, so the preinstall script fails even when pnpm is selected.
+
+Required fix:
+
+1. Open package.json.
+
+2. Find the preinstall script.
+
+It currently looks similar to:
+
+"preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'"
+
+3. Replace it with a deployment-safe version:
+
+"preinstall": "rm -f package-lock.json yarn.lock"
+
+Important:
+Do not keep any script that exits with code 1.
+Do not block npm_config_user_agent.
+Do not reject Hostinger’s install environment.
+
+4. Make sure package.json still keeps these scripts:
+
+"build": "vite build"
+"start": "node server.js"
+
+5. Make sure the project can still be installed and built with pnpm:
+
+pnpm install
+pnpm run build
+
+6. Do not convert the project to a static Vite app.
+
+This is a TanStack Start / SSR project.
+
+Keep the SSR setup.
+
+7. Keep Hostinger deployment compatible.
+
+Recommended Hostinger settings after this fix:
+
+Framework: Other
+Node version: 24.x or 22.x
+Root directory: ./
+Package manager: pnpm
+Install command: pnpm install
+Build command: pnpm run build
+Entry file: server.js
+Output directory: empty
+
+8. After fixing:
+
+Run:
+
+pnpm install
+pnpm run build
+
+Then commit and push to:
+
+https://github.com/Abdoessam0/easypick
+
+Commit message:
+
+Fix Hostinger pnpm preinstall deployment issue
+
+9. Acceptance checklist:
+
+- preinstall no longer fails on Hostinger
+- package-lock.json and yarn.lock are still removed if generated
+- pnpm install works
+- pnpm run build works
+- server.js is still the entry file
+- SSR structure remains unchanged
+- changes are pushed to GitHub

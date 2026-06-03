@@ -240,4 +240,118 @@
     transform: scale(1.15);
     box-shadow: 0 4px 16px -4px color-mix(in oklab, var(--primary) 60%, transparent);
   }
+
+  .quick-rise {
+    animation: quick-rise 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .quick-pop {
+    animation: quick-pop 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .quick-card-enter {
+    animation: quick-card-enter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both, quick-float 5s ease-in-out infinite;
+  }
+
+  .quick-selected {
+    animation: quick-selected 1.8s ease-in-out infinite;
+  }
+
+  .quick-drift {
+    animation: quick-drift 9s ease-in-out infinite;
+  }
+
+  .quick-drift-reverse {
+    animation: quick-drift 11s ease-in-out infinite reverse;
+  }
+
+  .quick-cta-shine {
+    position: relative;
+  }
+
+  .quick-cta-shine::after {
+    content: "";
+    position: absolute;
+    inset: -40% auto -40% -35%;
+    width: 30%;
+    transform: skewX(-18deg);
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.42), transparent);
+    animation: quick-shine 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes quick-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes quick-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes quick-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes quick-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes quick-selected {
+  0%, 100% {
+    box-shadow:
+      0 8px 32px -8px color-mix(in oklab, var(--primary) 42%, transparent),
+      0 0 0 0 color-mix(in oklab, var(--primary) 18%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 14px 42px -10px color-mix(in oklab, var(--primary) 48%, transparent),
+      0 0 0 9px color-mix(in oklab, var(--primary) 0%, transparent);
+  }
+}
+
+@keyframes quick-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(22px, 16px, 0) scale(1.06);
+  }
+}
+
+@keyframes quick-shine {
+  0%, 35% {
+    left: -35%;
+  }
+  65%, 100% {
+    left: 110%;
+  }
 }

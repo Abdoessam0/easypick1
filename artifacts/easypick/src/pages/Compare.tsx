@@ -20,6 +20,7 @@ export default function ComparePage() {
       const t = window.setTimeout(() => navigate("/results"), 1400);
       return () => window.clearTimeout(t);
     }
+    return undefined;
   }, [hasTwo, mode, navigate]);
 
   if (!mode) return <Redirect to="/mode" />;

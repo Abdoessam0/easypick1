@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Shell } from "@/components/easypick/Shell";
 import { PageTitle } from "@/components/easypick/PageTitle";
+import { SmartPickIcon } from "@/components/easypick/SmartPickIcon";
 import { useEasypick } from "@/lib/easypick-context";
 import {
-  Brain,
   Zap,
   Target,
   HeartPulse,
@@ -51,7 +51,7 @@ function ModePage() {
         />
         <ModeCard
           name="Smart Pick"
-          icon={<Brain className="h-12 w-12 text-primary" />}
+          icon={<SmartPickIcon className="h-12 w-12 text-primary" />}
           desc="Personalized suggestions based on nutrition goals, preferences, and detailed filters."
           benefits={[
             { icon: Target, label: "Personalized" },

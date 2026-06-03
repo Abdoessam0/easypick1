@@ -13,8 +13,8 @@ function Welcome() {
   return (
     <Shell>
       <div className="mx-auto flex max-w-5xl flex-col items-center pt-6 text-center">
-        <Logo className="h-16 w-auto" />
-        <h1 className="mt-6 text-6xl font-extrabold leading-tight tracking-tight md:text-7xl">
+        <Logo className="h-24 w-auto md:h-28" />
+        <h1 className="mt-5 text-6xl font-extrabold leading-tight tracking-tight md:text-7xl">
           Welcome to <span className="text-gradient-primary">Easypick</span>
         </h1>
         <p className="mt-4 text-xl text-muted-foreground">

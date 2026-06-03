@@ -1,4 +1,5 @@
-import { Brain, Zap, Utensils } from "lucide-react";
+import { Zap, Utensils } from "lucide-react";
+import { SmartPickIcon } from "./SmartPickIcon";
 import { useEasypick } from "@/lib/easypick-context";
 
 export function ModeBadge() {
@@ -8,7 +9,7 @@ export function ModeBadge() {
   if (mode === "smart") {
     return (
       <div className="glass inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-primary">
-        <Brain className="h-4 w-4" />
+        <SmartPickIcon className="h-4 w-4" />
         SMART PICK
       </div>
     );

@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import { useEasypick } from "@/lib/easypick-context";
 import { Logo } from "@/components/easypick/Logo";
+import { SmartPickIcon } from "@/components/easypick/SmartPickIcon";
 import { Globe, ChevronDown, ChevronRight, HelpCircle, Users } from "lucide-react";
 
 export default function Welcome() {
@@ -30,7 +31,7 @@ export default function Welcome() {
       <div className="flex items-start justify-between px-6 pt-6 md:px-10">
         <div className="w-8" />
         <div className="flex flex-col items-center gap-0 pt-1">
-          <Logo className="h-24 w-auto" />
+          <Logo className="h-28 w-auto md:h-32" />
         </div>
         <button className="glass flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-foreground/70">
           <Globe className="h-4 w-4" />
@@ -40,7 +41,7 @@ export default function Welcome() {
       </div>
 
       {/* Hero */}
-      <div className="flex flex-col items-center text-center px-6 pt-6 pb-4">
+      <div className="flex flex-col items-center text-center px-6 pt-4 pb-4">
         <h1 className="text-[3.2rem] font-extrabold leading-[1.1] tracking-tight md:text-[4rem]">
           Welcome to{" "}
           <span className="text-gradient-primary">Easypick</span>
@@ -146,24 +147,7 @@ function ModeCard({
 
 /* ── Smart Pick card icon: rounded brain matching reference ── */
 function SmartPickCardIcon() {
-  return (
-    <svg viewBox="0 0 44 44" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-      {/* Left hemisphere — full rounded lobe */}
-      <path d="M21 11 C19 8,13 7,9 11 C6 14,5 19,7 22 C5 25,5 30,9 33 C12 35,17 36,21 34 L21 11Z" />
-      {/* Left folds */}
-      <path d="M21 18 C18 17,14 18,12 21" />
-      <path d="M21 27 C18 26,14 27,12 30" />
-
-      {/* Right hemisphere — mirror lobe */}
-      <path d="M23 11 C25 8,31 7,35 11 C38 14,39 19,37 22 C39 25,39 30,35 33 C32 35,27 36,23 34 L23 11Z" />
-      {/* Right folds */}
-      <path d="M23 18 C26 17,30 18,32 21" />
-      <path d="M23 27 C26 26,30 27,32 30" />
-
-      {/* Center gap line */}
-      <line x1="22" y1="11" x2="22" y2="34" strokeWidth="1" stroke="white" />
-    </svg>
-  );
+  return <SmartPickIcon className="h-11 w-11 text-primary drop-shadow-sm" />;
 }
 
 /* ── Quick Pick card icon: bold lightning bolt ── */

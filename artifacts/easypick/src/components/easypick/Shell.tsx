@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
-import { Globe, RotateCw, ChevronDown, Brain, Zap } from "lucide-react";
+import { Globe, RotateCw, ChevronDown, Zap } from "lucide-react";
 import { Logo } from "./Logo";
+import { SmartPickIcon } from "./SmartPickIcon";
 import { BottomNav } from "./BottomNav";
 import { ModeStatusBar } from "./ModeStatusBar";
 import { useEasypick } from "@/lib/easypick-context";
@@ -18,7 +19,6 @@ export function Shell({
   const { isRotatedView, toggleRotate, mode } = useEasypick();
 
   const isSmart = mode === "smart";
-  const ModeIcon = isSmart ? Brain : Zap;
   const modeLabel = isSmart ? "Smart Pick" : "Quick Pick";
 
   return (
@@ -28,14 +28,18 @@ export function Shell({
     >
       <header className="relative z-10 flex items-center justify-between gap-3 px-6 pt-5 pb-3 md:px-10">
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <Logo className="h-16 w-auto" />
+          <Logo className="h-20 w-auto" />
         </Link>
 
         <div className="flex-1 flex justify-center">
           {!onWelcome && mode && (
             <div className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold shadow-soft">
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft">
-                <ModeIcon className="h-3.5 w-3.5 text-primary" />
+                {isSmart ? (
+                  <SmartPickIcon className="h-4 w-4 text-primary" />
+                ) : (
+                  <Zap className="h-3.5 w-3.5 text-primary" />
+                )}
               </div>
               <span className="uppercase tracking-wide text-primary">{modeLabel}</span>
             </div>

@@ -1,5 +1,6 @@
 import { useLocation } from "wouter";
-import { Brain, Zap, RefreshCw, ArrowLeftRight } from "lucide-react";
+import { Zap, RefreshCw, ArrowLeftRight } from "lucide-react";
+import { SmartPickIcon } from "./SmartPickIcon";
 import { useEasypick } from "@/lib/easypick-context";
 
 export function ModeStatusBar() {
@@ -9,14 +10,17 @@ export function ModeStatusBar() {
   if (!mode) return null;
 
   const isSmart = mode === "smart";
-  const Icon = isSmart ? Brain : Zap;
   const label = isSmart ? "Smart Pick" : "Quick Pick";
 
   return (
     <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/80 px-5 py-2.5 shadow-soft">
       <div className="flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft">
-          <Icon className="h-3.5 w-3.5 text-primary" />
+          {isSmart ? (
+            <SmartPickIcon className="h-4 w-4 text-primary" />
+          ) : (
+            <Zap className="h-3.5 w-3.5 text-primary" />
+          )}
         </div>
         <div className="leading-tight">
           <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Current mode</div>

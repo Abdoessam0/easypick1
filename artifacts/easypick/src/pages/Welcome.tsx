@@ -30,7 +30,7 @@ export default function Welcome() {
       <div className="flex items-start justify-between px-6 pt-6 md:px-10">
         <div className="w-8" />
         <div className="flex flex-col items-center gap-0 pt-1">
-          <Logo className="h-18 w-auto" />
+          <Logo className="h-24 w-auto" />
         </div>
         <button className="glass flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-foreground/70">
           <Globe className="h-4 w-4" />
@@ -119,7 +119,7 @@ function ModeCard({
         <h3 className="text-[1.6rem] font-extrabold leading-tight tracking-tight">{title}</h3>
       </div>
 
-      <p className="text-[14px] text-muted-foreground leading-relaxed">{desc}</p>
+      <p className="text-[14px] text-muted-foreground leading-relaxed min-h-[48px]">{desc}</p>
 
       <div className="h-px bg-border" />
 

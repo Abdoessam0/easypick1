@@ -30,7 +30,7 @@ export default function Welcome() {
       <div className="flex items-start justify-between px-6 pt-6 md:px-10">
         <div className="w-8" />
         <div className="flex flex-col items-center gap-0 pt-1">
-          <Logo className="h-14 w-auto" />
+          <Logo className="h-20 w-auto" />
         </div>
         <button className="glass flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-foreground/70">
           <Globe className="h-4 w-4" />
@@ -59,7 +59,7 @@ export default function Welcome() {
       {/* Mode cards */}
       <div className="mx-auto grid w-full max-w-5xl flex-1 grid-cols-1 gap-4 px-6 pb-4 md:grid-cols-2 md:px-10">
         <ModeCard
-          icon={<BrainIcon />}
+          icon={<SmartPickCardIcon />}
           title={<><span className="text-foreground">SMART </span><span className="text-primary">PICK</span></>}
           desc="Answer a few simple questions and we'll personalize the results for you."
           benefits={smartBenefits}
@@ -67,7 +67,7 @@ export default function Welcome() {
           onClick={goSmart}
         />
         <ModeCard
-          icon={<QuickPickIcon />}
+          icon={<QuickPickCardIcon />}
           title={<><span className="text-foreground">QUICK </span><span className="text-primary">PICK</span></>}
           desc="Tell us what you're in the mood for and we'll narrow it down fast."
           benefits={quickBenefits}
@@ -144,27 +144,49 @@ function ModeCard({
   );
 }
 
-function BrainIcon() {
+/* ── Smart Pick card icon: hand with X and checkmark circles ── */
+function SmartPickCardIcon() {
   return (
-    <svg viewBox="0 0 40 40" className="h-9 w-9 text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 32v-4c-2.5 0-4.5-1.5-5.5-3.5C9 23 9 21 10 19.5c-1-1-1.5-2.5-1.5-4 0-2 1-4 3-5 2-1 4.5-.5 5.5 1C18 10 19 8.5 20 8.5s2 1.5 3 3c1-1.5 3.5-2 5.5-1 2 1 3 3 3 5 0 1.5-.5 3-1.5 4 1 1.5 1 3.5-.5 5S27.5 28 25 28v4" />
-      <line x1="20" y1="8.5" x2="20" y2="28" />
-      <line x1="10" y1="18" x2="15" y2="18" />
-      <line x1="25" y1="18" x2="30" y2="18" />
-      <line x1="14" y1="23" x2="26" y2="23" />
+    <svg viewBox="0 0 48 48" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* X circle — upper left */}
+      <circle cx="12" cy="11" r="7" />
+      <line x1="9.5" y1="8.5" x2="14.5" y2="13.5" />
+      <line x1="14.5" y1="8.5" x2="9.5" y2="13.5" />
+      {/* Checkmark circle — upper right */}
+      <circle cx="36" cy="11" r="7" />
+      <polyline points="32.5,11 35,13.5 39.5,8" strokeWidth="2.2" />
+      {/* Hand / finger pointing up */}
+      <path d="M24 39.5V20.5a2.5 2.5 0 0 1 5 0v5" />
+      <path d="M29 25.5a2.5 2.5 0 0 1 5 0v2.5" />
+      <path d="M34 28a2.5 2.5 0 0 1 5 0v4C39 38 35.5 43.5 29 43.5H26c-3.5 0-5.5-2-6.5-4.5L16 32a2.5 2.5 0 0 1 4.7-1.7L22 33" />
+      <path d="M19.5 25.5V16.5a2.5 2.5 0 0 1 5 0v4" />
     </svg>
   );
 }
 
-function QuickPickIcon() {
+/* ── Quick Pick card icon: stopwatch with flames ── */
+function QuickPickCardIcon() {
   return (
-    <svg viewBox="0 0 40 40" className="h-9 w-9 text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="22" cy="21" r="10" />
-      <line x1="22" y1="21" x2="27" y2="17" />
-      <line x1="22" y1="12" x2="22" y2="9" />
-      <rect x="19.5" y="7" width="5" height="2.5" rx="1" strokeWidth="1.4" />
-      <path d="M8 17C6 15 5 12 7 9" strokeWidth="1.8" />
-      <path d="M8 17C8.5 14 10 12.5 12 11" strokeWidth="1.2" />
+    <svg viewBox="0 0 48 48" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      {/* Flames on the left */}
+      <path d="M9 32c0-5 3-8 3-13 0 0 2 3 2 6 1-2 2-5 1-9 3 2 5 6 5 10 0-1 0-3-1-5 2 1 3 4 3 7 0 5-4 9-7 9s-6-2-6-5z" strokeWidth="1.8" />
+      {/* Stopwatch body */}
+      <circle cx="31" cy="30" r="13" />
+      {/* Crown/button on top */}
+      <rect x="28" y="14" width="6" height="3.5" rx="1.5" />
+      {/* Side loop */}
+      <path d="M40 18.5 l2.5-2.5" strokeWidth="2" />
+      <circle cx="43.5" cy="15.5" r="1.5" fill="currentColor" strokeWidth="0" />
+      {/* Clock hands */}
+      <line x1="31" y1="30" x2="31" y2="22" strokeWidth="2.2" />
+      <line x1="31" y1="30" x2="36" y2="33" strokeWidth="2.2" />
+      {/* Center dot */}
+      <circle cx="31" cy="30" r="1.5" fill="currentColor" strokeWidth="0" />
+      {/* Tick marks */}
+      <line x1="31" y1="18.5" x2="31" y2="20.5" strokeWidth="1.5" />
+      <line x1="31" y1="39.5" x2="31" y2="41.5" strokeWidth="1.5" />
+      <line x1="19.5" y1="30" x2="21.5" y2="30" strokeWidth="1.5" />
+      <line x1="40.5" y1="30" x2="42.5" y2="30" strokeWidth="1.5" />
     </svg>
   );
 }

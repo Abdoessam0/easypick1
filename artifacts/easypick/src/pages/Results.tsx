@@ -141,40 +141,80 @@ export default function ResultsPage() {
   );
 }
 
-const prefLabels: Record<string, [string, string, string]> = {
-  protein: ["Balanced", "Normal", "High Protein"],
-  calories: ["Light", "Normal", "Filling"],
-  sugar: ["Less Sweet", "Normal", "Sweet OK"],
-  energy: ["Light", "Normal", "Boost"],
-};
-
-const prefIcons = {
-  protein: Dumbbell,
-  calories: Flame,
-  sugar: Candy,
-  energy: Zap,
-};
+const prefConfig = [
+  {
+    key: "protein" as const,
+    label: "Protein",
+    labels: ["Balanced", "Normal", "High Protein"],
+    Icon: Dumbbell,
+  },
+  {
+    key: "calories" as const,
+    label: "Calories",
+    labels: ["Light", "Normal", "Filling"],
+    Icon: Flame,
+  },
+  {
+    key: "sugar" as const,
+    label: "Sugar",
+    labels: ["Less Sweet", "Normal", "Sweet OK"],
+    Icon: Candy,
+  },
+  {
+    key: "energy" as const,
+    label: "Energy",
+    labels: ["Light", "Normal", "Boost"],
+    Icon: Zap,
+  },
+];
 
 function PreferenceSummary({ prefs }: { prefs: Prefs }) {
-  const items = (["protein", "calories", "sugar", "energy"] as const).map((key) => ({
-    key,
-    Icon: prefIcons[key],
-    label: key.charAt(0).toUpperCase() + key.slice(1),
-    value: prefLabels[key][prefs[key]],
-  }));
-
   return (
-    <div className="mb-6 flex flex-wrap items-center gap-2">
-      {items.map(({ key, Icon, label, value }) => (
-        <div
-          key={key}
-          className="flex items-center gap-1.5 rounded-full bg-primary-soft border border-primary/20 px-3 py-1.5"
-        >
-          <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
-          <span className="text-[12px] font-semibold text-primary/70">{label}:</span>
-          <span className="text-[12px] font-bold text-primary">{value}</span>
-        </div>
-      ))}
+    <div className="mb-8 card-premium p-4">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-4">
+        {prefConfig.map(({ key, label, labels, Icon }) => {
+          const val = prefs[key]; // 0 | 1 | 2
+          const pct = val === 0 ? 0 : val === 1 ? 50 : 100;
+          return (
+            <div key={key} className="flex flex-col gap-2">
+              {/* Icon + name */}
+              <div className="flex items-center gap-1.5">
+                <Icon className="h-4 w-4 text-primary shrink-0" />
+                <span className="text-[13px] font-bold text-foreground">{label}</span>
+              </div>
+
+              {/* Slider track */}
+              <div className="relative h-[6px] rounded-full bg-border">
+                <div
+                  className="absolute top-0 left-0 h-full rounded-full bg-primary/20"
+                  style={{ width: `${pct}%` }}
+                />
+                <div
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-4 w-4 rounded-full bg-primary shadow-glow border-2 border-white"
+                  style={{ left: `${pct}%` }}
+                />
+              </div>
+
+              {/* Three labels */}
+              <div className="flex justify-between">
+                {labels.map((l, i) => (
+                  <span
+                    key={i}
+                    className={`text-[10px] font-semibold leading-tight ${
+                      i === val
+                        ? "text-primary"
+                        : "text-muted-foreground/60"
+                    } ${i === 1 ? "text-center" : i === 2 ? "text-right" : "text-left"}`}
+                    style={{ width: "33%" }}
+                  >
+                    {l}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

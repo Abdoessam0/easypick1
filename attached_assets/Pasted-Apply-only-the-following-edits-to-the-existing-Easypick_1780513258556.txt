@@ -1,0 +1,91 @@
+Apply only the following edits to the existing Easypick project.
+
+Important rules:
+- Do not redesign the app.
+- Do not change anything else unless explicitly listed below.
+- Keep the current layout, structure, flow, and visual style.
+- Only make the requested fixes and improvements.
+- Preserve all existing screens and logic unless a change below directly affects them.
+
+Requested edits
+
+1) Logo size
+- Make the Easypick logo bigger across the main screens.
+- Increase its visual presence while keeping it balanced and clean.
+- Use the same logo asset already provided.
+- Do not change the logo style, only improve its size and placement.
+
+2) First page cleanup
+- On the first welcome page, remove the text: “Tap anywhere to continue”.
+- Remove it completely from the UI.
+- Do not replace it with another message.
+
+3) Improve the icons on the first page
+- Improve the icons used in the first page cards.
+- Especially improve the Smart Pick and Quick Pick related icons.
+- Use cleaner, more premium, more modern icons.
+- Keep them simple, touch-friendly, and consistent with the existing warm futuristic style.
+- Match the icon quality with the reference images I provided.
+- Do not change the structure of the page, only improve the icon visuals.
+
+4) Red color consistency
+- Make all red colors across the interface use the same exact red tone as the red used in the Easypick wordmark/text.
+- Standardize all reds for:
+  - buttons
+  - highlights
+  - active states
+  - labels
+  - icons
+  - chips
+  - sliders
+  - comparison indicators
+- Keep the red visually consistent everywhere.
+
+5) Quick Pick / Hungry flow text fixes
+- In the Quick Pick flow, keep the Hungry mode experience.
+- Where the UI currently says “3 tasty matches are ready for you”, remove the number.
+- Change it to a cleaner version without numbers, for example:
+  - “Tasty matches are ready for you”
+- Keep the same meaning, just remove the number.
+
+6) Remove the small helper text under the mood page CTA
+- On the mood selection page, remove the text like:
+  - “2 options will be recommended for you”
+- Remove this helper text completely.
+- Do not replace it with another line.
+
+7) Add selected preference summary to the results page
+- On the Smart Pick results page, add the preference summary bar/filters at the top of the page based on the user’s chosen values.
+- This should reflect the user’s selected values, such as:
+  - Protein
+  - Calories
+  - Sugar
+  - Energy
+- Show the chosen states clearly above the meal results, matching the reference image.
+- This should be dynamic and based on what the user selected before entering the results page.
+- Keep the style consistent with the current design.
+
+8) Hungry mode label / context
+- Make sure the Hungry mode context is clearly shown in the related Quick Pick results flow.
+- Keep it clean and subtle.
+- Do not add clutter.
+- If there is already a mode label, improve it rather than redesigning it.
+
+9) Deployment fix
+- Inspect the deployment configuration and fix any deployment issues.
+- Make the project deploy successfully.
+- Check and correct:
+  - framework/build preset
+  - build command
+  - output directory
+  - package manager
+  - node version
+  - entry file if needed
+- Use the correct configuration based on the actual project stack.
+- Do not break the project structure.
+- Make deployment-ready adjustments only if necessary.
+
+Important final instruction
+- Do not change any other text, layout, spacing, cards, flows, or visual components unless required by the exact fixes above.
+- Do not make extra design changes.
+- Only apply the requested edits precisely.

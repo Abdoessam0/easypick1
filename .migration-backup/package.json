@@ -67,6 +67,12 @@
     "vite-tsconfig-paths": "^6.0.2",
     "zod": "^3.24.2"
   },
+  "overrides": {
+    "h3": ">=1.15.9",
+    "ws": ">=8.18.1",
+    "brace-expansion": ">=5.0.6",
+    "@tanstack/start-server-core": ">=1.168.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^1.7.0",

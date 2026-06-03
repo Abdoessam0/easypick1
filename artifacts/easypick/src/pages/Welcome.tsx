@@ -11,17 +11,17 @@ export default function Welcome() {
   const goQuick = () => { reset(); setMode("quick"); navigate("/quick"); };
 
   const smartBenefits: { icon: React.ReactNode; label: string }[] = [
-    { icon: <TargetIcon />, label: "Personalized\nto You" },
-    { icon: <ChartIcon />, label: "Matches Your\nGoals" },
-    { icon: <LeafHeartIcon />, label: "Healthier\nChoices" },
-    { icon: <CheckShieldIcon />, label: "Better\nDecisions" },
+    { icon: <span className="text-2xl leading-none">🎯</span>, label: "Personalized\nto You" },
+    { icon: <span className="text-2xl leading-none">📊</span>, label: "Matches Your\nGoals" },
+    { icon: <span className="text-2xl leading-none">💚</span>, label: "Healthier\nChoices" },
+    { icon: <span className="text-2xl leading-none">🛡️</span>, label: "Better\nDecisions" },
   ];
 
   const quickBenefits: { icon: React.ReactNode; label: string }[] = [
-    { icon: <BoltIcon />, label: "Super\nFast" },
-    { icon: <ForkIcon />, label: "Curated\nOptions" },
-    { icon: <ChoiceHandIcon />, label: "Easy\n& Simple" },
-    { icon: <SmileIcon />, label: "Less Stress\nMore Enjoyment" },
+    { icon: <span className="text-2xl leading-none">⚡</span>, label: "Super\nFast" },
+    { icon: <span className="text-2xl leading-none">🍽️</span>, label: "Curated\nOptions" },
+    { icon: <span className="text-2xl leading-none">👆</span>, label: "Easy\n& Simple" },
+    { icon: <span className="text-2xl leading-none">😊</span>, label: "Less Stress\nMore Enjoyment" },
   ];
 
   return (
@@ -144,130 +144,33 @@ function ModeCard({
   );
 }
 
-/* ── Smart Pick card icon: hand with X and checkmark circles ── */
+/* ── Smart Pick card icon: clean brain / neural network ── */
 function SmartPickCardIcon() {
   return (
-    <svg viewBox="0 0 48 48" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      {/* X circle — upper left */}
-      <circle cx="12" cy="11" r="7" />
-      <line x1="9.5" y1="8.5" x2="14.5" y2="13.5" />
-      <line x1="14.5" y1="8.5" x2="9.5" y2="13.5" />
-      {/* Checkmark circle — upper right */}
-      <circle cx="36" cy="11" r="7" />
-      <polyline points="32.5,11 35,13.5 39.5,8" strokeWidth="2.2" />
-      {/* Hand / finger pointing up */}
-      <path d="M24 39.5V20.5a2.5 2.5 0 0 1 5 0v5" />
-      <path d="M29 25.5a2.5 2.5 0 0 1 5 0v2.5" />
-      <path d="M34 28a2.5 2.5 0 0 1 5 0v4C39 38 35.5 43.5 29 43.5H26c-3.5 0-5.5-2-6.5-4.5L16 32a2.5 2.5 0 0 1 4.7-1.7L22 33" />
-      <path d="M19.5 25.5V16.5a2.5 2.5 0 0 1 5 0v4" />
+    <svg viewBox="0 0 44 44" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      {/* Left hemisphere */}
+      <path d="M22 36V10" />
+      <path d="M22 10c-2-3-6-3.5-8.5-1.5S10 14 11 17c-2 .5-4 2.5-4 5s1.5 4.5 3.5 5c-.5 2 .5 4.5 3 5.5s5 .5 6.5-1.5" />
+      <path d="M11 17c1.5 0 3 .5 4 1.5" />
+      <path d="M10.5 22c1.5-.5 3-.5 4.5.5" />
+      {/* Right hemisphere */}
+      <path d="M22 10c2-3 6-3.5 8.5-1.5S34 14 33 17c2 .5 4 2.5 4 5s-1.5 4.5-3.5 5c.5 2-.5 4.5-3 5.5s-5 .5-6.5-1.5" />
+      <path d="M33 17c-1.5 0-3 .5-4 1.5" />
+      <path d="M33.5 22c-1.5-.5-3-.5-4.5.5" />
     </svg>
   );
 }
 
-/* ── Quick Pick card icon: stopwatch with flames ── */
+/* ── Quick Pick card icon: bold lightning bolt ── */
 function QuickPickCardIcon() {
   return (
-    <svg viewBox="0 0 48 48" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      {/* Flames on the left */}
-      <path d="M9 32c0-5 3-8 3-13 0 0 2 3 2 6 1-2 2-5 1-9 3 2 5 6 5 10 0-1 0-3-1-5 2 1 3 4 3 7 0 5-4 9-7 9s-6-2-6-5z" strokeWidth="1.8" />
-      {/* Stopwatch body */}
-      <circle cx="31" cy="30" r="13" />
-      {/* Crown/button on top */}
-      <rect x="28" y="14" width="6" height="3.5" rx="1.5" />
-      {/* Side loop */}
-      <path d="M40 18.5 l2.5-2.5" strokeWidth="2" />
-      <circle cx="43.5" cy="15.5" r="1.5" fill="currentColor" strokeWidth="0" />
-      {/* Clock hands */}
-      <line x1="31" y1="30" x2="31" y2="22" strokeWidth="2.2" />
-      <line x1="31" y1="30" x2="36" y2="33" strokeWidth="2.2" />
-      {/* Center dot */}
-      <circle cx="31" cy="30" r="1.5" fill="currentColor" strokeWidth="0" />
-      {/* Tick marks */}
-      <line x1="31" y1="18.5" x2="31" y2="20.5" strokeWidth="1.5" />
-      <line x1="31" y1="39.5" x2="31" y2="41.5" strokeWidth="1.5" />
-      <line x1="19.5" y1="30" x2="21.5" y2="30" strokeWidth="1.5" />
-      <line x1="40.5" y1="30" x2="42.5" y2="30" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function TargetIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="10" cy="10" r="8" />
-      <circle cx="10" cy="10" r="4.5" />
-      <circle cx="10" cy="10" r="1.5" fill="currentColor" />
-    </svg>
-  );
-}
-
-function ChartIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="11" width="3.5" height="7" rx="0.8" />
-      <rect x="8.25" y="6.5" width="3.5" height="11.5" rx="0.8" />
-      <rect x="14.5" y="2" width="3.5" height="16" rx="0.8" />
-    </svg>
-  );
-}
-
-function LeafHeartIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10 16.5C10 16.5 3 12.5 3 7.5A4 4 0 0 1 10 5a4 4 0 0 1 7 2.5c0 5-7 9-7 9z" />
-    </svg>
-  );
-}
-
-function CheckShieldIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10 2L3.5 4.5V10c0 3.5 2.5 6.5 6.5 8 4-1.5 6.5-4.5 6.5-8V4.5L10 2z" />
-      <polyline points="7,10 9,12.5 13,8" strokeWidth="1.8" />
-    </svg>
-  );
-}
-
-function BoltIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11.5 2L5 11h6l-2.5 7L17 9h-6.5L11.5 2z" fill="currentColor" fillOpacity="0.15" />
-      <path d="M11.5 2L5 11h6l-2.5 7L17 9h-6.5L11.5 2z" />
-    </svg>
-  );
-}
-
-function ForkIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="6" y1="2" x2="6" y2="7" />
-      <path d="M4 2v3a2 2 0 0 0 4 0V2" />
-      <line x1="6" y1="9" x2="6" y2="18" />
-      <line x1="14" y1="2" x2="14" y2="18" />
-      <path d="M14 2c2 0 3 1.5 3 3.5S16 8 14 8.5" />
-    </svg>
-  );
-}
-
-function ChoiceHandIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V10" />
-      <path d="M10 9.5V8a1.5 1.5 0 0 1 3 0v2" />
-      <path d="M13 10.5V9a1.5 1.5 0 0 1 3 0v3c0 3.5-2 5.5-5 5.5H9c-2.5 0-4-1.5-4-4v-2.5" />
-      <circle cx="4.5" cy="4.5" r="2.2" />
-      <polyline points="3.4,4.5 4.3,5.5 5.8,3.3" strokeWidth="1.6" />
-    </svg>
-  );
-}
-
-function SmileIcon() {
-  return (
-    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="10" cy="10" r="8" />
-      <path d="M7 12.5c0.8 1.5 2 2 3 2s2.2-.5 3-2" />
-      <circle cx="7.5" cy="8.5" r="0.8" fill="currentColor" />
-      <circle cx="12.5" cy="8.5" r="0.8" fill="currentColor" />
+    <svg viewBox="0 0 44 44" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path
+        d="M25 5L10 24h12l-3 15L37 20H25L25 5z"
+        fill="currentColor"
+        fillOpacity="0.12"
+      />
+      <path d="M25 5L10 24h12l-3 15L37 20H25L25 5z" />
     </svg>
   );
 }

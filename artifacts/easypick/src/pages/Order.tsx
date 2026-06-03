@@ -95,7 +95,7 @@ function FakeQR() {
             const rr = r < 7 ? r : size - 1 - r;
             const cc = c < 7 ? c : c >= size - 7 ? size - 1 - c : c;
             const on = rr === 0 || rr === 6 || cc === 0 || cc === 6 || (rr >= 2 && rr <= 4 && cc >= 2 && cc <= 4);
-            return on ? <rect key={i} x={c} y={r} width={1} height={1} fill="#C21318" /> : null;
+            return on ? <rect key={i} x={c} y={r} width={1} height={1} fill="oklch(0.48 0.21 27)" /> : null;
           }
           return seed % 2 === 0 ? <rect key={i} x={c} y={r} width={1} height={1} fill="#1a1a1a" /> : null;
         })}

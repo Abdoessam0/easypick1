@@ -1,21 +1,7 @@
 import { useLocation } from "wouter";
 import { useEasypick } from "@/lib/easypick-context";
 import { Logo } from "@/components/easypick/Logo";
-import { Globe, ChevronDown, ChevronRight, HelpCircle, Users, Hand } from "lucide-react";
-
-const smartBenefits = [
-  { icon: "🎯", label: "Personalized\nto You" },
-  { icon: "📊", label: "Matches Your\nGoals" },
-  { icon: "💚", label: "Healthier\nChoices" },
-  { icon: "⏱️", label: "Better\nDecisions" },
-];
-
-const quickBenefits = [
-  { icon: "⚡", label: "Super\nFast" },
-  { icon: "🍽️", label: "Curated\nOptions" },
-  { icon: "👆", label: "Easy\n& Simple" },
-  { icon: "😊", label: "Less Stress\nMore Enjoyment" },
-];
+import { Globe, ChevronDown, ChevronRight, HelpCircle, Users } from "lucide-react";
 
 export default function Welcome() {
   const { setMode, reset } = useEasypick();
@@ -24,15 +10,27 @@ export default function Welcome() {
   const goSmart = () => { reset(); setMode("smart"); navigate("/smart"); };
   const goQuick = () => { reset(); setMode("quick"); navigate("/quick"); };
 
+  const smartBenefits: { icon: React.ReactNode; label: string }[] = [
+    { icon: <TargetIcon />, label: "Personalized\nto You" },
+    { icon: <ChartIcon />, label: "Matches Your\nGoals" },
+    { icon: <LeafHeartIcon />, label: "Healthier\nChoices" },
+    { icon: <CheckShieldIcon />, label: "Better\nDecisions" },
+  ];
+
+  const quickBenefits: { icon: React.ReactNode; label: string }[] = [
+    { icon: <BoltIcon />, label: "Super\nFast" },
+    { icon: <ForkIcon />, label: "Curated\nOptions" },
+    { icon: <ChoiceHandIcon />, label: "Easy\n& Simple" },
+    { icon: <SmileIcon />, label: "Less Stress\nMore Enjoyment" },
+  ];
+
   return (
-    <div
-      className="bg-canvas relative min-h-screen overflow-hidden flex flex-col"
-    >
+    <div className="bg-canvas relative min-h-screen overflow-hidden flex flex-col">
       {/* Header */}
       <div className="flex items-start justify-between px-6 pt-6 md:px-10">
         <div className="w-8" />
         <div className="flex flex-col items-center gap-0 pt-1">
-          <Logo className="h-8 w-auto" />
+          <Logo className="h-14 w-auto" />
         </div>
         <button className="glass flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-foreground/70">
           <Globe className="h-4 w-4" />
@@ -69,7 +67,7 @@ export default function Welcome() {
           onClick={goSmart}
         />
         <ModeCard
-          icon={<ZapIconRed />}
+          icon={<QuickPickIcon />}
           title={<><span className="text-foreground">QUICK </span><span className="text-primary">PICK</span></>}
           desc="Tell us what you're in the mood for and we'll narrow it down fast."
           benefits={quickBenefits}
@@ -89,11 +87,6 @@ export default function Welcome() {
           <Users className="h-4 w-4 text-primary shrink-0" />
           <span>Designed for a shared experience.<br className="hidden sm:block" /> Everyone can explore together!</span>
         </div>
-
-        <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
-          <Hand className="h-4 w-4 text-primary" />
-          <span className="font-semibold text-center">Tap anywhere<br />to continue</span>
-        </div>
       </div>
     </div>
   );
@@ -110,7 +103,7 @@ function ModeCard({
   icon: React.ReactNode;
   title: React.ReactNode;
   desc: string;
-  benefits: { icon: string; label: string }[];
+  benefits: { icon: React.ReactNode; label: string }[];
   cta: string;
   onClick: () => void;
 }) {
@@ -133,7 +126,7 @@ function ModeCard({
       <div className="grid grid-cols-4 gap-2">
         {benefits.map(({ icon: ic, label }, i) => (
           <div key={i} className="flex flex-col items-center gap-2 text-center">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[oklch(0.97_0.012_30)] text-[20px]">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[oklch(0.97_0.012_30)] text-primary">
               {ic}
             </div>
             <div className="text-[11px] font-semibold leading-tight text-foreground/70 whitespace-pre-line">
@@ -153,18 +146,106 @@ function ModeCard({
 
 function BrainIcon() {
   return (
-    <svg viewBox="0 0 40 40" className="h-9 w-9 text-primary" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 8c-2 0-4 1-5 2.5C13 9 11 8 9 9c-2 1-3 3-3 5 0 1.5.5 3 1.5 4C6 19.5 6 21 7 22.5c1 1.5 2.5 2.5 4 2.5v5h18v-5c1.5 0 3-1 4-2.5 1-1.5 1-3 .5-4.5C34.5 17 35 15.5 35 14c0-2-1-4-3-5-2-1-4 0-5 1.5C26 9 24 8 22 8h-2Z" />
-      <path d="M20 8v19M14 16h-4M30 16h-4M14 22h12" />
+    <svg viewBox="0 0 40 40" className="h-9 w-9 text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 32v-4c-2.5 0-4.5-1.5-5.5-3.5C9 23 9 21 10 19.5c-1-1-1.5-2.5-1.5-4 0-2 1-4 3-5 2-1 4.5-.5 5.5 1C18 10 19 8.5 20 8.5s2 1.5 3 3c1-1.5 3.5-2 5.5-1 2 1 3 3 3 5 0 1.5-.5 3-1.5 4 1 1.5 1 3.5-.5 5S27.5 28 25 28v4" />
+      <line x1="20" y1="8.5" x2="20" y2="28" />
+      <line x1="10" y1="18" x2="15" y2="18" />
+      <line x1="25" y1="18" x2="30" y2="18" />
+      <line x1="14" y1="23" x2="26" y2="23" />
     </svg>
   );
 }
 
-function ZapIconRed() {
+function QuickPickIcon() {
   return (
-    <svg viewBox="0 0 40 40" className="h-9 w-9 text-primary" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 6L10 22h12l-4 12L34 18H22L26 6z" fill="currentColor" fillOpacity="0.12" />
-      <path d="M22 6L10 22h12l-4 12L34 18H22L26 6z" />
+    <svg viewBox="0 0 40 40" className="h-9 w-9 text-primary" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="22" cy="21" r="10" />
+      <line x1="22" y1="21" x2="27" y2="17" />
+      <line x1="22" y1="12" x2="22" y2="9" />
+      <rect x="19.5" y="7" width="5" height="2.5" rx="1" strokeWidth="1.4" />
+      <path d="M8 17C6 15 5 12 7 9" strokeWidth="1.8" />
+      <path d="M8 17C8.5 14 10 12.5 12 11" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function TargetIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="8" />
+      <circle cx="10" cy="10" r="4.5" />
+      <circle cx="10" cy="10" r="1.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+function ChartIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="11" width="3.5" height="7" rx="0.8" />
+      <rect x="8.25" y="6.5" width="3.5" height="11.5" rx="0.8" />
+      <rect x="14.5" y="2" width="3.5" height="16" rx="0.8" />
+    </svg>
+  );
+}
+
+function LeafHeartIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 16.5C10 16.5 3 12.5 3 7.5A4 4 0 0 1 10 5a4 4 0 0 1 7 2.5c0 5-7 9-7 9z" />
+    </svg>
+  );
+}
+
+function CheckShieldIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 2L3.5 4.5V10c0 3.5 2.5 6.5 6.5 8 4-1.5 6.5-4.5 6.5-8V4.5L10 2z" />
+      <polyline points="7,10 9,12.5 13,8" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+function BoltIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M11.5 2L5 11h6l-2.5 7L17 9h-6.5L11.5 2z" fill="currentColor" fillOpacity="0.15" />
+      <path d="M11.5 2L5 11h6l-2.5 7L17 9h-6.5L11.5 2z" />
+    </svg>
+  );
+}
+
+function ForkIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="6" y1="2" x2="6" y2="7" />
+      <path d="M4 2v3a2 2 0 0 0 4 0V2" />
+      <line x1="6" y1="9" x2="6" y2="18" />
+      <line x1="14" y1="2" x2="14" y2="18" />
+      <path d="M14 2c2 0 3 1.5 3 3.5S16 8 14 8.5" />
+    </svg>
+  );
+}
+
+function ChoiceHandIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V10" />
+      <path d="M10 9.5V8a1.5 1.5 0 0 1 3 0v2" />
+      <path d="M13 10.5V9a1.5 1.5 0 0 1 3 0v3c0 3.5-2 5.5-5 5.5H9c-2.5 0-4-1.5-4-4v-2.5" />
+      <circle cx="4.5" cy="4.5" r="2.2" />
+      <polyline points="3.4,4.5 4.3,5.5 5.8,3.3" strokeWidth="1.6" />
+    </svg>
+  );
+}
+
+function SmileIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="8" />
+      <path d="M7 12.5c0.8 1.5 2 2 3 2s2.2-.5 3-2" />
+      <circle cx="7.5" cy="8.5" r="0.8" fill="currentColor" />
+      <circle cx="12.5" cy="8.5" r="0.8" fill="currentColor" />
     </svg>
   );
 }

@@ -162,7 +162,7 @@ export default function SmartPage() {
                 <span className="text-gradient-primary">match your vibe!</span>
               </div>
               <div className="flex items-center gap-1 text-[13px] text-muted-foreground">
-                <span className="text-[oklch(0.60_0.14_145)] font-semibold">3 tasty matches are ready for you</span>
+                <span className="text-[oklch(0.60_0.14_145)] font-semibold">Tasty matches are ready for you</span>
                 <span className="text-[oklch(0.60_0.14_145)]">✓</span>
               </div>
             </div>

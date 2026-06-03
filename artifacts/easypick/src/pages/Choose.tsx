@@ -278,7 +278,7 @@ function SmallQR() {
             const on = corner(r, c)
               ? r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)
               : cells[i];
-            return on ? <rect key={i} x={c} y={r} width={1} height={1} fill="#C21318" /> : null;
+            return on ? <rect key={i} x={c} y={r} width={1} height={1} fill="oklch(0.48 0.21 27)" /> : null;
           })
         )}
       </svg>

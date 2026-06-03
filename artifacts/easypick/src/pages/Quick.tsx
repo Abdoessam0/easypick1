@@ -127,10 +127,6 @@ export default function QuickPage() {
         >
           SHOW BEST MATCHES <ChevronRight className="h-5 w-5" />
         </button>
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Star className="h-3.5 w-3.5 text-warning" />
-          2 options will be recommended for you.
-        </p>
       </div>
     </Shell>
   );

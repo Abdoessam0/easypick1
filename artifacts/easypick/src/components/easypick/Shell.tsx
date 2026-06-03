@@ -28,7 +28,7 @@ export function Shell({
     >
       <header className="relative z-10 flex items-center justify-between gap-3 px-6 pt-5 pb-3 md:px-10">
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <Logo className="h-9 w-auto" />
+          <Logo className="h-12 w-auto" />
         </Link>
 
         <div className="flex-1 flex justify-center">

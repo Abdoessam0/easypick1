@@ -2,8 +2,8 @@ import { Link, useLocation, Redirect } from "wouter";
 import { Shell } from "@/components/easypick/Shell";
 import { MealCard } from "@/components/easypick/MealCard";
 import { useEasypick } from "@/lib/easypick-context";
-import { getMealsByMood, getSmartMatches, getMealById, type Meal } from "@/lib/meals";
-import { ChevronLeft, ChevronRight, X, ShoppingBasket, Flame, Heart } from "lucide-react";
+import { getMealsByMood, getSmartMatches, getMealById, type Meal, type Prefs } from "@/lib/meals";
+import { ChevronLeft, ChevronRight, X, ShoppingBasket, Flame, Heart, Dumbbell, Candy, Zap } from "lucide-react";
 
 const REQUIRED = 2;
 
@@ -50,11 +50,12 @@ export default function ResultsPage() {
 
           {mode === "quick" && mood && (
             <div className="mt-4 flex items-center justify-center gap-3 text-sm text-muted-foreground flex-wrap">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[12px] font-bold text-primary-foreground">
+                {mood.toUpperCase()} MODE
+              </span>
               <span className="flex items-center gap-1"><Flame className="h-4 w-4 text-primary" /> High Satiety</span>
               <span className="text-border">·</span>
               <span className="flex items-center gap-1"><Heart className="h-4 w-4 text-primary" /> Satisfying Choices</span>
-              <span className="text-border">·</span>
-              <span className="font-semibold text-primary">{meals.length} matches found</span>
             </div>
           )}
           {mode === "smart" && (
@@ -63,6 +64,8 @@ export default function ResultsPage() {
             </div>
           )}
         </div>
+
+        {mode === "smart" && <PreferenceSummary prefs={prefs} />}
 
         {meals.length === 0 ? (
           <div className="card-premium mx-auto max-w-md p-10 text-center">
@@ -135,6 +138,44 @@ export default function ResultsPage() {
         </div>
       </div>
     </Shell>
+  );
+}
+
+const prefLabels: Record<string, [string, string, string]> = {
+  protein: ["Balanced", "Normal", "High Protein"],
+  calories: ["Light", "Normal", "Filling"],
+  sugar: ["Less Sweet", "Normal", "Sweet OK"],
+  energy: ["Light", "Normal", "Boost"],
+};
+
+const prefIcons = {
+  protein: Dumbbell,
+  calories: Flame,
+  sugar: Candy,
+  energy: Zap,
+};
+
+function PreferenceSummary({ prefs }: { prefs: Prefs }) {
+  const items = (["protein", "calories", "sugar", "energy"] as const).map((key) => ({
+    key,
+    Icon: prefIcons[key],
+    label: key.charAt(0).toUpperCase() + key.slice(1),
+    value: prefLabels[key][prefs[key]],
+  }));
+
+  return (
+    <div className="mb-6 flex flex-wrap items-center gap-2">
+      {items.map(({ key, Icon, label, value }) => (
+        <div
+          key={key}
+          className="flex items-center gap-1.5 rounded-full bg-primary-soft border border-primary/20 px-3 py-1.5"
+        >
+          <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+          <span className="text-[12px] font-semibold text-primary/70">{label}:</span>
+          <span className="text-[12px] font-bold text-primary">{value}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 

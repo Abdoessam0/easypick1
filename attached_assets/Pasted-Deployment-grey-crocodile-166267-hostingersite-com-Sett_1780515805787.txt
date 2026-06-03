@@ -1,0 +1,175 @@
+Deployment
+
+grey-crocodile-166267.hostingersite.com
+
+Settings and redeploy
+
+All deployments
+Deployment build failed
+
+Please resolve the issues and redeploy.
+
+
+View analysis
+State:
+
+Build failed
+
+Repository:
+
+easypick
+
+Author:
+
+Author:
+Replit Agent
+
+Deployed:
+
+2026-06-03 22:35
+
+•
+
+21s
+
+Branch:
+
+main
+
+Commit:
+
+fef9ac65 - Published your App Replit-Commit-Author: Deployment Replit-Commit-Session-Id: d3d10896-00bd-41f7-8035-0daa49e8c4d1 Replit-Commit-Checkpoint-Type: full_checkpoint Replit-Commit-Event-Id: a637401f-9ecc-483f-b445-1c832f6db2ea Replit-Commit-Screenshot-Url: https://storage.googleapis.com/screenshot-production-us-central1/33aa48c8-ea40-474e-9d20-dc0b2bd17340/d3d10896-00bd-41f7-8035-0daa49e8c4d1/wguEmXk Replit-Commit-Deployment-Build-Id: f1d28a39-c1dd-42b0-9a26-fb070e44f757 Replit-Helium-Checkpoint-Created: true
+
+Root directory:
+
+./
+
+Framework:
+
+Other
+
+Build and output settings:
+
+Custom
+
+Node version:
+
+24.x
+
+Build logs
+Lines: 29
+
+Search logs
+
+
+
+1
+
+Scope: all 9 workspace projects
+
+2
+
+Lockfile is up to date, resolution step is skipped
+
+3
+
+Progress: resolved 1, reused 0, downloaded 0, added 0
+
+4
+
+Packages: +531
+
+5
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+6
+
+
+7
+
+╭──────────────────────────────────────────────╮
+
+8
+
+│ │
+
+9
+
+│ Update available! 11.3.0 → 11.5.1. │
+
+10
+
+│ Changelog: https://pnpm.io/v/11.5.1 │
+
+11
+
+│ To update, run: corepack use pnpm@11.5.1 │
+
+12
+
+│ │
+
+13
+
+╰──────────────────────────────────────────────╯
+
+14
+
+
+15
+
+Progress: resolved 531, reused 531, downloaded 0, added 321
+
+16
+
+Progress: resolved 531, reused 531, downloaded 0, added 524
+
+17
+
+Progress: resolved 531, reused 531, downloaded 0, added 527
+
+18
+
+Progress: resolved 531, reused 531, downloaded 0, added 531, done
+
+19
+
+
+20
+
+devDependencies:
+
+21
+
++ prettier 3.8.3
+
+22
+
++ typescript 5.9.3
+
+23
+
+
+24
+
+. preinstall$ rm -f package-lock.json yarn.lock
+
+25
+
+. preinstall: Done
+
+26
+
+[ERR_PNPM_IGNORED_BUILDS] Ignored build scripts: esbuild@0.27.3
+
+27
+
+
+28
+
+Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts.
+
+29
+
+ERROR: Failed to install dependencies

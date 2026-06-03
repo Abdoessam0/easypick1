@@ -144,19 +144,24 @@ function ModeCard({
   );
 }
 
-/* ── Smart Pick card icon: clean brain / neural network ── */
+/* ── Smart Pick card icon: rounded brain matching reference ── */
 function SmartPickCardIcon() {
   return (
-    <svg viewBox="0 0 44 44" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-      {/* Left hemisphere */}
-      <path d="M22 36V10" />
-      <path d="M22 10c-2-3-6-3.5-8.5-1.5S10 14 11 17c-2 .5-4 2.5-4 5s1.5 4.5 3.5 5c-.5 2 .5 4.5 3 5.5s5 .5 6.5-1.5" />
-      <path d="M11 17c1.5 0 3 .5 4 1.5" />
-      <path d="M10.5 22c1.5-.5 3-.5 4.5.5" />
-      {/* Right hemisphere */}
-      <path d="M22 10c2-3 6-3.5 8.5-1.5S34 14 33 17c2 .5 4 2.5 4 5s-1.5 4.5-3.5 5c.5 2-.5 4.5-3 5.5s-5 .5-6.5-1.5" />
-      <path d="M33 17c-1.5 0-3 .5-4 1.5" />
-      <path d="M33.5 22c-1.5-.5-3-.5-4.5.5" />
+    <svg viewBox="0 0 44 44" className="h-10 w-10 text-primary" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      {/* Left hemisphere — full rounded lobe */}
+      <path d="M21 11 C19 8,13 7,9 11 C6 14,5 19,7 22 C5 25,5 30,9 33 C12 35,17 36,21 34 L21 11Z" />
+      {/* Left folds */}
+      <path d="M21 18 C18 17,14 18,12 21" />
+      <path d="M21 27 C18 26,14 27,12 30" />
+
+      {/* Right hemisphere — mirror lobe */}
+      <path d="M23 11 C25 8,31 7,35 11 C38 14,39 19,37 22 C39 25,39 30,35 33 C32 35,27 36,23 34 L23 11Z" />
+      {/* Right folds */}
+      <path d="M23 18 C26 17,30 18,32 21" />
+      <path d="M23 27 C26 26,30 27,32 30" />
+
+      {/* Center gap line */}
+      <line x1="22" y1="11" x2="22" y2="34" strokeWidth="1" stroke="white" />
     </svg>
   );
 }

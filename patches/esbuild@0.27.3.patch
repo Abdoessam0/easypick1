@@ -1,0 +1,17 @@
+diff --git a/install.js b/install.js
+index 1019e62435fd0258e39ad6db102194d46bd85ce4..293f220487b0da393a70ba5f3b33d4388f9fa8fd 100644
+--- a/install.js
++++ b/install.js
+@@ -281,6 +281,12 @@ this. If that fails, you need to remove the "--no-optional" flag to use esbuild.
+   maybeOptimizePackage(binPath);
+ }
+ checkAndPreparePackage().then(() => {
++  if (!isToPathJS) {
++    try {
++      fs2.chmodSync(toPath, 493);
++    } catch {
++    }
++  }
+   if (isToPathJS) {
+     validateBinaryVersion(process.execPath, toPath);
+   } else {

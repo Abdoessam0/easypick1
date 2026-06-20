@@ -106,15 +106,15 @@ export default function ComparePage() {
         </p>
       </div>
 
-      <div className="mx-auto max-w-5xl">
-        <div className="grid items-center gap-4 md:grid-cols-[minmax(0,1fr)_76px_minmax(0,1fr)]">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_320px_minmax(0,1fr)]">
           {[mealA, mealB].map((meal, idx) => {
             const isWinner = meal.id === winnerMeal.id;
             return (
               <div
                 key={meal.id}
                 className={`card-premium flex flex-col gap-4 p-5 transition-all ${
-                  idx === 0 ? "order-1 md:col-start-1" : "order-3 md:col-start-3 md:row-start-1"
+                  idx === 0 ? "order-1 lg:col-start-1" : "order-3 lg:col-start-3 lg:row-start-1"
                 } ${
                   isWinner ? "ring-2 ring-primary shadow-glow" : ""
                 }`}
@@ -183,17 +183,14 @@ export default function ComparePage() {
             );
           })}
 
-          <div className="order-2 flex items-center justify-center md:col-start-2 md:row-start-1 md:self-stretch">
-            <div className="relative flex w-full items-center justify-center py-1 md:h-full md:py-0">
-              <div className="absolute left-0 right-0 top-1/2 h-px bg-primary/20 md:left-1/2 md:right-auto md:top-0 md:h-full md:w-px" />
-              <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-primary text-base font-black text-white shadow-glow">
+          <div className="card-premium order-2 p-5 lg:col-start-2 lg:row-start-1">
+            <div className="mb-5 flex items-center justify-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-primary text-base font-black text-white shadow-glow">
                 VS
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-5">
+            <div className="space-y-4">
             {metrics.map((metric) => {
               const va = metric.get(mealA);
               const vb = metric.get(mealB);
@@ -202,44 +199,46 @@ export default function ComparePage() {
               const Icon = metric.icon;
 
               return (
-                <div key={metric.key} className="card-premium p-4">
-                  <div className="flex items-center justify-center gap-1.5 mb-2">
-                    <Icon className="h-3.5 w-3.5 text-primary" />
-                    <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{metric.label}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-[11px] font-semibold mb-1">
-                    <span className={better === "a" ? "text-primary font-bold" : "text-muted-foreground"}>
+                <div key={metric.key} className="border-b border-border/70 pb-4 last:border-0 last:pb-0">
+                  <div className="mb-2 grid grid-cols-[64px_1fr_64px] items-center gap-3">
+                    <span className={`text-left text-[12px] font-extrabold ${better === "a" ? "text-emerald-600" : "text-muted-foreground"}`}>
                       {metric.display(mealA)}
                     </span>
-                    <div className="flex flex-1 gap-0.5">
-                      <div className="flex-1 bar-track">
-                        <div
-                          className="bar-fill-primary ml-auto"
-                          style={{ width: `${(va / maxVal) * 100}%` }}
-                        />
-                      </div>
-                      <div className="flex-1 bar-track">
-                        <div
-                          className="bar-fill-primary"
-                          style={{ width: `${(vb / maxVal) * 100}%` }}
-                        />
-                      </div>
+                    <div className="flex min-w-0 items-center justify-center gap-1.5 text-center">
+                      <Icon className="h-3.5 w-3.5 shrink-0 text-primary" />
+                      <span className="truncate text-[12px] font-extrabold text-foreground/75">{metric.label}</span>
                     </div>
-                    <span className={better === "b" ? "text-primary font-bold" : "text-muted-foreground"}>
+                    <span className={`text-right text-[12px] font-extrabold ${better === "b" ? "text-primary" : "text-muted-foreground"}`}>
                       {metric.display(mealB)}
                     </span>
                   </div>
 
+                  <div className="grid grid-cols-2 gap-0.5">
+                      <div className="bar-track">
+                        <div
+                          className={`h-full rounded-full ${better === "a" ? "bg-emerald-500" : "bg-muted-foreground/25"} ml-auto`}
+                          style={{ width: `${(va / maxVal) * 100}%` }}
+                        />
+                      </div>
+                      <div className="bar-track">
+                        <div
+                          className={`h-full rounded-full ${better === "b" ? "bg-primary" : "bg-muted-foreground/25"}`}
+                          style={{ width: `${(vb / maxVal) * 100}%` }}
+                        />
+                      </div>
+                  </div>
+
                   {better !== "tie" && (
-                    <div className={`flex items-center gap-1 text-[10px] font-bold ${better === "a" ? "justify-start" : "justify-end"}`}>
+                    <div className={`mt-1.5 flex items-center gap-1 text-[10px] font-bold ${better === "a" ? "justify-start text-emerald-600" : "justify-end text-primary"}`}>
                       <Star className="h-2.5 w-2.5 text-warning fill-current" />
-                      <span className="text-muted-foreground">Better</span>
+                      <span>Better</span>
                     </div>
                   )}
                 </div>
               );
             })}
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 card-premium p-5 flex flex-col sm:flex-row items-center gap-5">

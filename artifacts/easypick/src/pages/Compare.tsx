@@ -107,13 +107,15 @@ export default function ComparePage() {
       </div>
 
       <div className="mx-auto max-w-5xl">
-        <div className="grid grid-cols-[1fr_240px_1fr] gap-4 items-start">
+        <div className="grid items-center gap-4 md:grid-cols-[minmax(0,1fr)_76px_minmax(0,1fr)]">
           {[mealA, mealB].map((meal, idx) => {
             const isWinner = meal.id === winnerMeal.id;
             return (
               <div
                 key={meal.id}
                 className={`card-premium flex flex-col gap-4 p-5 transition-all ${
+                  idx === 0 ? "order-1 md:col-start-1" : "order-3 md:col-start-3 md:row-start-1"
+                } ${
                   isWinner ? "ring-2 ring-primary shadow-glow" : ""
                 }`}
               >
@@ -181,13 +183,17 @@ export default function ComparePage() {
             );
           })}
 
-          <div className="flex flex-col gap-2 sticky top-4">
-            <div className="flex items-center justify-center mb-2">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white text-sm font-black shadow-glow">
+          <div className="order-2 flex items-center justify-center md:col-start-2 md:row-start-1 md:self-stretch">
+            <div className="relative flex w-full items-center justify-center py-1 md:h-full md:py-0">
+              <div className="absolute left-0 right-0 top-1/2 h-px bg-primary/20 md:left-1/2 md:right-auto md:top-0 md:h-full md:w-px" />
+              <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border-4 border-white bg-primary text-base font-black text-white shadow-glow">
                 VS
               </div>
             </div>
+          </div>
+        </div>
 
+        <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-5">
             {metrics.map((metric) => {
               const va = metric.get(mealA);
               const vb = metric.get(mealB);
@@ -196,7 +202,7 @@ export default function ComparePage() {
               const Icon = metric.icon;
 
               return (
-                <div key={metric.key} className="card-premium p-3">
+                <div key={metric.key} className="card-premium p-4">
                   <div className="flex items-center justify-center gap-1.5 mb-2">
                     <Icon className="h-3.5 w-3.5 text-primary" />
                     <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{metric.label}</span>
@@ -234,7 +240,6 @@ export default function ComparePage() {
                 </div>
               );
             })}
-          </div>
         </div>
 
         <div className="mt-6 card-premium p-5 flex flex-col sm:flex-row items-center gap-5">
